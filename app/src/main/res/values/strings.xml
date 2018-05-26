@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TransEscolar</string>
+    <string name="intinerario">Intinerario</string>
+    <string name="passageiros">Passageiros</string>
+    <string name="escolas">Escolas</string>
+    <string name="usu_rio">Usuário</string>
+    <string name="pais">Pais</string>
+    <string name="mapa">Mapa</string>
+    <string name="todo">TODO</string>
+    <string name="title_activity_intinerario">IntinerarioActivity</string>
+</resources>
