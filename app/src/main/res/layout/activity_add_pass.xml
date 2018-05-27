@@ -4,6 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPassActivity">
+    tools:context=".AddPassActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <EditText
+        android:id="@+id/editNome"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="30dp"
+        android:hint="Nome:"
+        android:textColorHint="#000"
+        app:layout_constraintBottom_toTopOf="@+id/editEndP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editIdade"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="21dp"
+        android:hint="Idade:"
+        android:textColorHint="#000"
+        app:layout_constraintBottom_toTopOf="@+id/editEscola"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEndP"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editEndP"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginStart="22dp"
+        android:hint="Endereço Principal:"
+        android:textColorHint="#000"
+        app:layout_constraintBottom_toTopOf="@+id/editIdade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNome"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editEscola"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginStart="22dp"
+        android:hint="Escola:"
+        android:textColorHint="#000"
+        app:layout_constraintBottom_toTopOf="@+id/editPeriodo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editIdade"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editPeriodo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="41dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginStart="22dp"
+        android:hint="Periodo:"
+        android:textColorHint="#000"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEscola"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="73dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginStart="22dp"
+        android:text="SALVAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPeriodo"
+        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

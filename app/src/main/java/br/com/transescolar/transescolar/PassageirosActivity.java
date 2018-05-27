@@ -5,6 +5,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class PassageirosActivity extends AppCompatActivity {
@@ -29,5 +30,19 @@ public class PassageirosActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+
+        return true;
+
+    };
+
+    public void addPass(MenuItem item) {
+        Intent intent = new Intent(PassageirosActivity.this, AddPassActivity.class);
+        startActivity(intent);
     }
 }
