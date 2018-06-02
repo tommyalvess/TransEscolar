@@ -1,7 +1,9 @@
-package br.com.transescolar.transescolar;
+package br.com.transescolar.transescolar.Activies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import br.com.transescolar.transescolar.R;
 
 public class MapActivity extends AppCompatActivity {
 

@@ -1,13 +1,13 @@
-package br.com.transescolar.transescolar;
+package br.com.transescolar.transescolar.Activies;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import br.com.transescolar.transescolar.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {

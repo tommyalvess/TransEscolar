@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "617745666036",
+    "firebase_url": "https://transescolar-af499.firebaseio.com",
+    "project_id": "transescolar-af499",
+    "storage_bucket": "transescolar-af499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617745666036:android:56390d4302fd58c2",
+        "android_client_info": {
+          "package_name": "br.com.transescolar.transescolar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617745666036-h3lhoh248g4p8ktfketrcnshbbegsof3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.transescolar.transescolar",
+            "certificate_hash": "24467f5c71ae64a2fac027c242ac2c9968520145"
+          }
+        },
+        {
+          "client_id": "617745666036-i99rngfcbb1o1i3aj04c2mk46rs7v4t5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "617745666036-i99rngfcbb1o1i3aj04c2mk46rs7v4t5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR0jV4Dulo44j_OwDtBpPEnjpsv1DQdEk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617745666036-i99rngfcbb1o1i3aj04c2mk46rs7v4t5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

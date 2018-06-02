@@ -1,4 +1,4 @@
-package br.com.transescolar.transescolar;
+package br.com.transescolar.transescolar.Activies;
 
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -7,24 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class EscolasActivity extends AppCompatActivity {
+import br.com.transescolar.transescolar.R;
+
+public class UsuarioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_escolas);
+        setContentView(R.layout.activity_usuario);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        getSupportActionBar().setTitle("Escolas");     //Titulo para ser exibido na sua Action Bar em frente à seta
+        getSupportActionBar().setTitle("Usuários");     //Titulo para ser exibido na sua Action Bar em frente à seta
     }
 
-    @Override
-    public void onBackPressed(){ //Botão BACK padrão do android
-        startActivity(new Intent(this, HomeActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
-        finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
-        return;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
