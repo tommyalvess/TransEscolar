@@ -2,41 +2,41 @@ package br.com.transescolar.transescolar.Model;
 
 public class Tios {
 
-    private String nome;
-    private String cpf;
+    private String nomeT;
+    private String cpfT;
     private String apelido;
     private String placa;
-    private String img;
-    private String tell;
+    private String imgT;
+    private String tellT;
     private Kids passageiros;
 
     public Tios() {
     }
 
-    public Tios(String nome, String cpf, String apelido, String placa, String img, String tell, Kids passageiros) {
-        this.nome = nome;
-        this.cpf = cpf;
+    public Tios(String nomeT, String cpfT, String apelido, String placa, String imgT, String tellT, Kids passageiros) {
+        this.nomeT = nomeT;
+        this.cpfT = cpfT;
         this.apelido = apelido;
         this.placa = placa;
-        this.img = img;
-        this.tell = tell;
+        this.imgT = imgT;
+        this.tellT = tellT;
         this.passageiros = passageiros;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeT() {
+        return nomeT;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeT(String nomeT) {
+        this.nomeT = nomeT;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCpfT() {
+        return cpfT;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpfT(String cpfT) {
+        this.cpfT = cpfT;
     }
 
     public String getApelido() {
@@ -55,20 +55,20 @@ public class Tios {
         this.placa = placa;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgT() {
+        return imgT;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgT(String imgT) {
+        this.imgT = imgT;
     }
 
-    public String getTell() {
-        return tell;
+    public String getTellT() {
+        return tellT;
     }
 
-    public void setTell(String tell) {
-        this.tell = tell;
+    public void setTellT(String tellT) {
+        this.tellT = tellT;
     }
 
     public Kids getPassageiros() {
@@ -77,5 +77,10 @@ public class Tios {
 
     public void setPassageiros(Kids passageiros) {
         this.passageiros = passageiros;
+    }
+
+    @Override
+    public String toString() {
+        return nomeT;
     }
 }

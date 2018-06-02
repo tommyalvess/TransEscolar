@@ -2,53 +2,53 @@ package br.com.transescolar.transescolar.Model;
 
 public class Pais {
 
-    private String nome;
-    private String cpf;
-    private String tell;
-    private String img;
+    private String nomeP;
+    private String cpfP;
+    private String tellP;
+    private String imgP;
     private Kids filhos;
 
     public Pais() {
     }
 
-    public Pais(String nome, String cpf, String tell, String img, Kids filhos) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.tell = tell;
-        this.img = img;
+    public Pais(String nomeP, String cpfP, String tellP, String imgP, Kids filhos) {
+        this.nomeP = nomeP;
+        this.cpfP = cpfP;
+        this.tellP = tellP;
+        this.imgP = imgP;
         this.filhos = filhos;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeP() {
+        return nomeP;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeP(String nomeP) {
+        this.nomeP = nomeP;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCpfP() {
+        return cpfP;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpfP(String cpfP) {
+        this.cpfP = cpfP;
     }
 
-    public String getTell() {
-        return tell;
+    public String getTellP() {
+        return tellP;
     }
 
-    public void setTell(String tell) {
-        this.tell = tell;
+    public void setTellP(String tellP) {
+        this.tellP = tellP;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgP() {
+        return imgP;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgP(String imgP) {
+        this.imgP = imgP;
     }
 
     public Kids getFilhos() {
@@ -57,5 +57,11 @@ public class Pais {
 
     public void setFilhos(Kids filhos) {
         this.filhos = filhos;
+    }
+
+    @Override
+    public String toString() {
+        return nomeP;
+
     }
 }

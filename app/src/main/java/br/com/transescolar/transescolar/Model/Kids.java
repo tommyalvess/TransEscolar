@@ -2,33 +2,33 @@ package br.com.transescolar.transescolar.Model;
 
 public class Kids {
 
-    private String nome;
+    private String nomeK;
     private String dt_nas;
     private String end_p;
     private Escolas escola;
     private String periodo;
-    private String img;
+    private String imgK;
     private Tios tio;
 
     public Kids() {
     }
 
-    public Kids(String nome, String dt_nas, String end_p, Escolas escola, String periodo, String img, Tios tio) {
-        this.nome = nome;
+    public Kids(String nomeK, String dt_nas, String end_p, Escolas escola, String periodo, String imgK, Tios tio) {
+        this.nomeK = nomeK;
         this.dt_nas = dt_nas;
         this.end_p = end_p;
         this.escola = escola;
         this.periodo = periodo;
-        this.img = img;
+        this.imgK = imgK;
         this.tio = tio;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeK() {
+        return nomeK;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeK(String nomeK) {
+        this.nomeK = nomeK;
     }
 
     public String getDt_nas() {
@@ -63,12 +63,12 @@ public class Kids {
         this.periodo = periodo;
     }
 
-    public String getImg() {
-        return img;
+    public String getImgK() {
+        return imgK;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgK(String imgK) {
+        this.imgK = imgK;
     }
 
     public Tios getTio() {
@@ -79,3 +79,4 @@ public class Kids {
         this.tio = tio;
     }
 }
+
