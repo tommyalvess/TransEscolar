@@ -1,5 +1,6 @@
 package br.com.transescolar.transescolar.Activies;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,5 +30,15 @@ public class Login extends AppCompatActivity {
                 btnLogin.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    public void Entrar(View view) {
+        Intent intent = new Intent(Login.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void Cadastro(View view) {
+        Intent intent = new Intent(Login.this, CadastroActivity.class);
+        startActivity(intent);
     }
 }
