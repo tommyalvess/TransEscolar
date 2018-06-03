@@ -2,6 +2,7 @@ package br.com.transescolar.transescolar.Model;
 
 public class Tios {
 
+    private String id;
     private String nomeT;
     private String cpfT;
     private String apelido;
@@ -10,10 +11,11 @@ public class Tios {
     private String tellT;
     private Kids passageiros;
 
-    public Tios() {
+    public Tios(String id, String nome, String cpf, String apelido, String placa, String tell) {
     }
 
-    public Tios(String nomeT, String cpfT, String apelido, String placa, String imgT, String tellT, Kids passageiros) {
+    public Tios(String id, String nomeT, String cpfT, String apelido, String placa, String imgT, String tellT, Kids passageiros) {
+        this.id = id;
         this.nomeT = nomeT;
         this.cpfT = cpfT;
         this.apelido = apelido;
@@ -21,6 +23,18 @@ public class Tios {
         this.imgT = imgT;
         this.tellT = tellT;
         this.passageiros = passageiros;
+    }
+
+    public Tios(String id, String nome) {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNomeT() {
