@@ -1,6 +1,7 @@
 package br.com.transescolar.transescolar.Activies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -41,20 +42,27 @@ import br.com.transescolar.transescolar.Model.Tios;
 import br.com.transescolar.transescolar.R;
 
 import static br.com.transescolar.transescolar.R.id.btnSaveCadastro;
+import static com.google.android.gms.stats.internal.G.netStats.enabled;
 
 public class CadastroActivity extends AppCompatActivity {
 
     EditText editNome;
     Button btnSaveCadastro;
-    DatabaseReference
+    private DatabaseReference databaseReference;
+
+    private static final String TAG = "CadastroActivity";
+    private static final String REQUIRED = "Required";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        editNome = (EditText) findViewById(R.id.editNome);
-        btnSaveCadastro = (Button) findViewById(R.id.btnSaveCadastro);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        editNome = findViewById(R.id.editNome);
+        btnSaveCadastro = findViewById(R.id.btnSaveCadastro);
 
         btnSaveCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,17 +70,38 @@ public class CadastroActivity extends AppCompatActivity {
                 addUsuario();
             }
         });
+
     }
 
     private void  addUsuario(){
 
-        String nome = editNome.getText().toString().trim();
+        final String title = editNome.getText().toString();
 
-        if(!TextUtils.isEmpty(nome)){
+        // Validar campo vazio
+        if (TextUtils.isEmpty(title)) {
+            editNome.setError(REQUIRED);
+            return;
+        }
 
-        }else{
-            Toast.makeText(this, "Preencha os campos", Toast.LENGTH_SHORT).show();
+
+        // Evitar multiplos dados
+        setEditingEnabled(false);
+        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    private void setEditingEnabled(boolean enabled) {
+        editNome.setEnabled(enabled);
+        if (enabled) {
+            btnSaveCadastro.setVisibility(View.VISIBLE);
+        } else {
+            btnSaveCadastro.setVisibility(View.GONE);
         }
     }
+
+
+
+
 
 }

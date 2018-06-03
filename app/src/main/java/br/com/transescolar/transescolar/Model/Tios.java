@@ -1,5 +1,10 @@
 package br.com.transescolar.transescolar.Model;
 
+import com.google.firebase.firestore.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Tios {
 
     private String id;
@@ -11,8 +16,6 @@ public class Tios {
     private String tellT;
     private Kids passageiros;
 
-    public Tios(String id, String nome, String cpf, String apelido, String placa, String tell) {
-    }
 
     public Tios(String id, String nomeT, String cpfT, String apelido, String placa, String imgT, String tellT, Kids passageiros) {
         this.id = id;
@@ -97,4 +100,14 @@ public class Tios {
     public String toString() {
         return nomeT;
     }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", id);
+        result.put("nome", nomeT);
+
+        return result;
+    }
+    // [END post_to_map]
 }
