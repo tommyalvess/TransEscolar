@@ -7,37 +7,28 @@ import java.util.Map;
 
 public class Tios {
 
-    private String id;
+    private String uid;
     private String nomeT;
     private String cpfT;
     private String apelido;
     private String placa;
     private String imgT;
     private String tellT;
+    private String senhaT;
     private Kids passageiros;
 
 
-    public Tios(String id, String nomeT, String cpfT, String apelido, String placa, String imgT, String tellT, Kids passageiros) {
-        this.id = id;
-        this.nomeT = nomeT;
-        this.cpfT = cpfT;
-        this.apelido = apelido;
-        this.placa = placa;
-        this.imgT = imgT;
-        this.tellT = tellT;
-        this.passageiros = passageiros;
-    }
-
-    public Tios(String id, String nome) {
+    public Tios() {
 
     }
 
-    public String getId() {
-        return id;
+
+    public String getUid() {
+        return uid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getNomeT() {
@@ -88,6 +79,14 @@ public class Tios {
         this.tellT = tellT;
     }
 
+    public String getSenhaT() {
+        return senhaT;
+    }
+
+    public void setSenhaT(String senhaT) {
+        this.senhaT = senhaT;
+    }
+
     public Kids getPassageiros() {
         return passageiros;
     }
@@ -101,13 +100,5 @@ public class Tios {
         return nomeT;
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", id);
-        result.put("nome", nomeT);
 
-        return result;
-    }
-    // [END post_to_map]
 }

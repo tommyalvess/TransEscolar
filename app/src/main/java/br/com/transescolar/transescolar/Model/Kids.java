@@ -2,6 +2,7 @@ package br.com.transescolar.transescolar.Model;
 
 public class Kids {
 
+    private int id;
     private String nomeK;
     private String dt_nas;
     private String end_p;
@@ -13,7 +14,8 @@ public class Kids {
     public Kids() {
     }
 
-    public Kids(String nomeK, String dt_nas, String end_p, Escolas escola, String periodo, String imgK, Tios tio) {
+    public Kids(int id, String nomeK, String dt_nas, String end_p, Escolas escola, String periodo, String imgK, Tios tio) {
+        this.id = id;
         this.nomeK = nomeK;
         this.dt_nas = dt_nas;
         this.end_p = end_p;
@@ -21,6 +23,17 @@ public class Kids {
         this.periodo = periodo;
         this.imgK = imgK;
         this.tio = tio;
+    }
+
+    public Kids(String id, String nome) {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNomeK() {

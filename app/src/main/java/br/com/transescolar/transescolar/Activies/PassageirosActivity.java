@@ -37,7 +37,6 @@ public class PassageirosActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
 
-
         return true;
 
     };
