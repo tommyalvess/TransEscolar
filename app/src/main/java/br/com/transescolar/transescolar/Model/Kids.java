@@ -11,19 +11,6 @@ public class Kids {
     private String imgK;
     private Tios tio;
 
-    public Kids() {
-    }
-
-    public Kids(int id, String nomeK, String dt_nas, String end_p, Escolas escola, String periodo, String imgK, Tios tio) {
-        this.id = id;
-        this.nomeK = nomeK;
-        this.dt_nas = dt_nas;
-        this.end_p = end_p;
-        this.escola = escola;
-        this.periodo = periodo;
-        this.imgK = imgK;
-        this.tio = tio;
-    }
 
     public Kids(String id, String nome) {
     }

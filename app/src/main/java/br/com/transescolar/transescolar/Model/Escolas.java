@@ -6,14 +6,6 @@ public class Escolas {
     private String nome;
     private String end;
 
-    public Escolas() {
-    }
-
-    public Escolas(int id, String nome, String end) {
-        this.id = id;
-        this.nome = nome;
-        this.end = end;
-    }
 
     public int getId() {
         return id;

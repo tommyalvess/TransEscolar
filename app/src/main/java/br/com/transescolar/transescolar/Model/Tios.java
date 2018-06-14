@@ -7,27 +7,23 @@ import java.util.Map;
 
 public class Tios {
 
-    private String uid;
+    private int uid;
     private String nomeT;
+    private String email;
     private String cpfT;
     private String apelido;
     private String placa;
     private String imgT;
     private String tellT;
     private String senhaT;
-    private Kids passageiros;
+    private String locali;
 
 
-    public Tios() {
-
-    }
-
-
-    public String getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
@@ -87,18 +83,19 @@ public class Tios {
         this.senhaT = senhaT;
     }
 
-    public Kids getPassageiros() {
-        return passageiros;
+    public String getLocali() {
+        return locali;
     }
 
-    public void setPassageiros(Kids passageiros) {
-        this.passageiros = passageiros;
+    public void setLocali(String locali) {
+        this.locali = locali;
     }
 
-    @Override
-    public String toString() {
-        return nomeT;
+    public String getEmail() {
+        return email;
     }
 
-
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

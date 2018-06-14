@@ -2,21 +2,21 @@ package br.com.transescolar.transescolar.Model;
 
 public class Pais {
 
+    private int id;
     private String nomeP;
     private String cpfP;
     private String tellP;
     private String imgP;
+    private String senha;
+    private String email;
     private Kids filhos;
 
-    public Pais() {
+    public int getId() {
+        return id;
     }
 
-    public Pais(String nomeP, String cpfP, String tellP, String imgP, Kids filhos) {
-        this.nomeP = nomeP;
-        this.cpfP = cpfP;
-        this.tellP = tellP;
-        this.imgP = imgP;
-        this.filhos = filhos;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNomeP() {
@@ -59,9 +59,19 @@ public class Pais {
         this.filhos = filhos;
     }
 
-    @Override
-    public String toString() {
-        return nomeP;
+    public String getSenha() {
+        return senha;
+    }
 
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
