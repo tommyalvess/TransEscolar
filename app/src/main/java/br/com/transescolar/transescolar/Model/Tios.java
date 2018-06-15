@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Tios {
 
-    private int uid;
+    private int id;
     private String nomeT;
     private String email;
     private String cpfT;
@@ -20,11 +20,11 @@ public class Tios {
 
 
     public int getUid() {
-        return uid;
+        return id;
     }
 
     public void setUid(int uid) {
-        this.uid = uid;
+        this.id = uid;
     }
 
     public String getNomeT() {
