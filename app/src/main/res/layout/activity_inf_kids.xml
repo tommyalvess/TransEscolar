@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activies.UsuarioActivity">
+    tools:context=".Activies.InfKidsActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -45,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
-        android:text="CPF:"
+        android:text="End Pricipal: "
         app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -56,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
-        android:text="Apelido:"
+        android:text="Escola:"
         app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -78,9 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="123dp"
         android:layout_marginStart="16dp"
-        android:text="Telefone:"
+        android:text="Pai: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
 </android.support.constraint.ConstraintLayout>

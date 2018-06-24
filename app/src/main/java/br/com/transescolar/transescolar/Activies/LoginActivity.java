@@ -40,14 +40,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
         btnLogin = findViewById(R.id.btn_login);
-//        loginProgress = findViewById(R.id.login_progress);
-//        loginProgress.setVisibility(View.VISIBLE);
+        loginProgress = findViewById(R.id.login_progress);
+        loginProgress.setVisibility(View.VISIBLE);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loginProgress.setVisibility(View.VISIBLE);
-//                btnLogin.setVisibility(View.INVISIBLE);
+                loginProgress.setVisibility(View.VISIBLE);
+                btnLogin.setVisibility(View.INVISIBLE);
+
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
 
 
             }

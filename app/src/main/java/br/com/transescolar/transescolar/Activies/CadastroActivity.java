@@ -1,5 +1,6 @@
 package br.com.transescolar.transescolar.Activies;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,8 +41,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import br.com.transescolar.transescolar.API.ITios;
 import br.com.transescolar.transescolar.Model.Tios;
 import br.com.transescolar.transescolar.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static br.com.transescolar.transescolar.R.id.btnSaveCadastro;
 import static com.google.android.gms.stats.internal.G.netStats.enabled;
@@ -49,12 +55,9 @@ public class CadastroActivity extends AppCompatActivity {
 
     EditText editNome, editCpf, editApelido, editPlaca, editTell, editSenha;
     Button btnSaveCadastro;
+    ProgressBar progressBar;
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
 
-    private static final String TAG = "CadastroActivity";
-    private static final String REQUIRED = "Required";
 
 
     @Override
@@ -66,86 +69,63 @@ public class CadastroActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Cadastro");     //Titulo para ser exibido na sua Action Bar em frente à seta
 
-        inicializarFirebase();
+        progressBar = (ProgressBar)findViewById(R.id.progressBarCadastro);
+        editNome = (EditText)findViewById(R.id.editNome);
+        editCpf = (EditText)findViewById(R.id.editCpf2);
+        editApelido = (EditText)findViewById(R.id.editApelido2);
+        editPlaca = (EditText)findViewById(R.id.editPlaca);
+        editTell = (EditText)findViewById(R.id.editTell);
+        editSenha = (EditText)findViewById(R.id.editSenha);
+        btnSaveCadastro = (Button)findViewById(R.id.btnSaveCadastro);
 
-        editNome = findViewById(R.id.editNome);
-        editCpf = findViewById(R.id.editCpf2);
-        editApelido = findViewById(R.id.editApelido2);
-        editPlaca = findViewById(R.id.editPlaca);
-        editTell = findViewById(R.id.editTell);
-        editSenha = findViewById(R.id.editSenha);
-
-        btnSaveCadastro = findViewById(R.id.btnSaveCadastro);
+        progressBar.setVisibility(View.VISIBLE);
 
         btnSaveCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addUsuario();
+
+                progressBar.setVisibility(View.VISIBLE);
+                btnSaveCadastro.setVisibility(View.INVISIBLE);
+
+                Tios objTio = new Tios();
+                objTio.setNomeT(editNome.getText().toString());
+                objTio.setCpfT(editCpf.getText().toString());
+                objTio.setApelido(editApelido.getText().toString());
+                objTio.setPlaca(editPlaca.getText().toString());
+                objTio.setTellT(editTell.getText().toString());
+                objTio.setSenhaT(editSenha.getText().toString());
+
+                ITios iTios = ITios.retrofit.create(ITios.class);
+                final Call<Void> call = iTios.inseriTios(objTio);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (progressBar.isShown()){
+                           progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(CadastroActivity.this, "Adicionado com Sucesso!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        if (progressBar.isShown()){
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(CadastroActivity.this, "Não foi possível fazer a conexão", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
         });
 
-    }
-
-    private void inicializarFirebase() {
-
-        FirebaseApp.initializeApp(CadastroActivity.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }
-
-
-    private void  addUsuario(){
-
-        final String nome = editNome.getText().toString();
-        final String cpf = editCpf.getText().toString();
-        final String apelido = editApelido.getText().toString();
-        final String placa = editPlaca.getText().toString();
-        final String tell = editTell.getText().toString();
-        final String senha = editTell.getText().toString();
-
-        // Validar campo vazio
-        if (TextUtils.isEmpty(nome) || TextUtils.isEmpty(cpf) || TextUtils.isEmpty(apelido) || TextUtils.isEmpty(placa) || TextUtils.isEmpty(tell) || TextUtils.isEmpty(senha)) {
-            editNome.setError(REQUIRED);
-            editCpf.setError(REQUIRED);
-            editApelido.setError(REQUIRED);
-            editPlaca.setError(REQUIRED);
-            editTell.setError(REQUIRED);
-            editSenha.setError(REQUIRED);
-            return;
-        }else {
-            Tios objTios = new Tios();
-
-            objTios.setUid(UUID.randomUUID().toString());
-            objTios.setNomeT(editNome.getText().toString());
-            objTios.setCpfT(editCpf.getText().toString());
-            objTios.setApelido(editApelido.getText().toString());
-            objTios.setPlaca(editPlaca.getText().toString());
-            objTios.setTellT(editTell.getText().toString());
-            objTios.setSenhaT(editSenha.getText().toString());
-
-            databaseReference.child("Tios").child(objTios.getUid()).setValue(objTios);
-
-            limparCampos();
-            //displaying a success toast
-            Toast.makeText(this, "Usuario added", Toast.LENGTH_LONG).show();
-        }
-
-
-         //Evitar multiplos dados
-        setEditingEnabled(false);
-        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
 
     }
 
 
-    private void setEditingEnabled(boolean enabled) {
-        editNome.setEnabled(enabled);
-        if (enabled) {
-            btnSaveCadastro.setVisibility(View.VISIBLE);
-        } else {
-            btnSaveCadastro.setVisibility(View.GONE);
-        }
-    }
+
+
+
 
 
 
@@ -160,9 +140,6 @@ public class CadastroActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void limparCampos() {
-        editNome.setText("");
-    }
 
 
 }

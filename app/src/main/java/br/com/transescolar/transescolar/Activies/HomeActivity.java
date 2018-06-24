@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), // <- Line changed
                         "MAPA",
                         Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(HomeActivity.this, MapActivity.class);
+                Intent intent = new Intent(HomeActivity.this, MapsExActivity.class);
                 startActivity(intent);
             }
         }); // FIm do imgMap
