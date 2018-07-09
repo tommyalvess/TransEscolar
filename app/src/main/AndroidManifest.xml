@@ -95,7 +95,8 @@
         <activity
             android:name=".Activies.MapsExActivity"
             android:label="@string/title_activity_maps_ex" />
-        <activity android:name=".Activies.InfKidsActivity"></activity>
+        <activity android:name=".Activies.InfKidsActivity" />
+        <activity android:name=".Activies.TesteActivity"></activity>
     </application>
 
 </manifest>

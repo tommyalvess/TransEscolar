@@ -15,6 +15,9 @@ import retrofit2.http.Path;
 
 public interface ITios {
 
+    //10.0.2.2
+    //
+
     @POST("/api/tios/add")
     Call<Void> inseriTios(@Body Tios tios);
 
@@ -31,7 +34,7 @@ public interface ITios {
     Call<Void> removeTios(@Path("id") String id);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("http://192.168.1.113:80/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), // <- Line changed
                         "ESCOLAS",
                         Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(HomeActivity.this, EscolasActivity.class);
+                Intent intent = new Intent(HomeActivity.this, TesteActivity.class);
                 startActivity(intent);
 
             }
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), // <- Line changed
                         "INTINERARIO",
                         Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(HomeActivity.this, IntinerarioActivity.class);
+                Intent intent = new Intent(HomeActivity.this, TesteActivity.class);
                 startActivity(intent);
             }
         }); // Fim do imgIntinerario

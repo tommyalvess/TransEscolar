@@ -47,6 +47,8 @@ import br.com.transescolar.transescolar.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static br.com.transescolar.transescolar.R.id.btnSaveCadastro;
 import static com.google.android.gms.stats.internal.G.netStats.enabled;
@@ -80,6 +82,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
+
         btnSaveCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +115,7 @@ public class CadastroActivity extends AppCompatActivity {
                         if (progressBar.isShown()){
                             progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(CadastroActivity.this, "Não foi possível fazer a conexão", Toast.LENGTH_SHORT).show();
+                            btnSaveCadastro.setVisibility(View.VISIBLE);
                         }
                     }
                 });
