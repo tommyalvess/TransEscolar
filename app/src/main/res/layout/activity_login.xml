@@ -14,8 +14,9 @@
         android:background="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:title="Login"
-        tools:layout_editor_absoluteY="0dp">
+        app:title="Login - Tio"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
 
     </android.support.v7.widget.Toolbar>
 
@@ -49,6 +50,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_activity_toolbar"
-        app:srcCompat="@drawable/school_bus_tio"/>
+        app:srcCompat="@drawable/icon_app"/>
 
     <ProgressBar
         android:id="@+id/login_progress"

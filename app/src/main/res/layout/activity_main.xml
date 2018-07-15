@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
-        android:src="@drawable/busicon"
+        android:src="@drawable/iconapp"
         android:id="@+id/logo"
         app:layout_constraintBottom_toTopOf="@+id/escolas"
         app:layout_constraintEnd_toEndOf="parent"

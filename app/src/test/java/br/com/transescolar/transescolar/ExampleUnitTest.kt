@@ -1,4 +1,4 @@
-package br.com.transescolar.transescolar
+package br.com.transescolar.aplicativo
 
 import org.junit.Test
 

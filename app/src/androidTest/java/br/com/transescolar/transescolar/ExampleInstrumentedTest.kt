@@ -1,4 +1,4 @@
-package br.com.transescolar.transescolar
+package br.com.transescolar.aplicativo
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("br.com.transescolar.transescolar", appContext.packageName)
+        assertEquals("br.com.transescolar", appContext.packageName)
     }
 }
