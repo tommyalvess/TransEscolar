@@ -42,75 +42,86 @@ public class LoginActivity extends AppCompatActivity {
         editCpf = findViewById(R.id.login_main);
         editSenha = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.btn_login);
+        loginProgress = findViewById(R.id.login_progress);
 //        btnCadastro.findViewById(R.id.btn_cadastro);
 
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String cpf = editCpf.getText().toString().trim();
-//                String senha = editSenha.getText().toString().trim();
-//
-//                if (!cpf.isEmpty() || senha.isEmpty()){
-//                    login(cpf, senha);
-//                }else {
-//                    editCpf.setError("Insera seu CPF!");
-//                    editSenha.setError("Insera sua senha!!");
-//                }
-//            }
-//        });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cpf = editCpf.getText().toString().trim();
+                String senha = editSenha.getText().toString().trim();
+
+                if (!cpf.isEmpty() || !senha.isEmpty()){
+                    login(cpf, senha);
+                }else {
+                    editCpf.setError("Insera seu CPF!");
+                    editSenha.setError("Insera sua senha!!");
+                    loginProgress.setVisibility(View.GONE);
+                    btnLogin.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
     }
 
-//    private void login(final String cpf, final String senha) {
-//        //loginProgress.setVisibility(View.VISIBLE);
-//        //btnLogin.setVisibility(View.GONE);
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//                            JSONArray jsonArray = jsonObject.getJSONArray("login");
-//
-//                            if (success.equals("1")){
-//                                for (int i = 0; i < jsonArray.length(); i++){
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    String cpf = object.getString("cpf").trim();
-//                                    String senha = object.getString("senha").trim();
-//                                    loginProgress.setVisibility(View.GONE);
-//                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//                                    startActivity(intent);
-//                                }
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            loginProgress.setVisibility(View.GONE);
-//                            Toast.makeText(LoginActivity.this, "Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        loginProgress.setVisibility(View.GONE);
-//                        Toast.makeText(LoginActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }){
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> param = new HashMap<>();
-//                param.put("cpf", cpf);
-//                param.put("senha", senha);
-//                return param;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//    }
+    private void login(final String cpf, final String senha) {
+        loginProgress.setVisibility(View.VISIBLE);
+        btnLogin.setVisibility(View.GONE);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            //boolean success = jsonResponse.getBoolean("success");
+                            String success = jsonResponse.getString("success");
+                            JSONArray jsonArray = jsonResponse.getJSONArray("login");
+
+                            if (success.equals("1")){
+                                for (int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    String cpf = object.getString("cpf").trim();
+                                    String senha = object.getString("senha").trim();
+                                    loginProgress.setVisibility(View.GONE);
+                                }
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                            }else {
+                                loginProgress.setVisibility(View.GONE);
+                                btnLogin.setVisibility(View.VISIBLE);
+                                Toast.makeText(LoginActivity.this,"Usuario não localizado!!",Toast.LENGTH_LONG).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            loginProgress.setVisibility(View.GONE);
+                            btnLogin.setVisibility(View.VISIBLE);
+                            Toast.makeText(LoginActivity.this, "Tente novamente mais tarde!!" + e.toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loginProgress.setVisibility(View.GONE);
+                        btnLogin.setVisibility(View.VISIBLE);
+                        Toast.makeText(LoginActivity.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("cpf", cpf);
+                param.put("senha", senha);
+                return param;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 
 
     public void Cadastro(View view) {

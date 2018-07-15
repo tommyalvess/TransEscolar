@@ -64,9 +64,32 @@ public class CadastroActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         btnCadastro.setOnClickListener(new View.OnClickListener() {
+            String nome = editNome.getText().toString().trim();
+            String cpf = editCpf.getText().toString().trim();
+            String apelido = editApelido.getText().toString().trim();
+            String placa = editPlaca.getText().toString().trim();
+            String tell = editTell.getText().toString().trim();
+            String senha = editSenha.getText().toString().trim();
+            String email = editEmail.getText().toString().trim();
+
             @Override
             public void onClick(View v) {
-                Regist();
+                if (!nome.isEmpty() && !cpf.isEmpty() && !apelido.isEmpty() && !placa.isEmpty() && !tell.isEmpty() && !senha.isEmpty() && !email.isEmpty()){
+                    Regist();
+                } else if(!nome.isEmpty() || !cpf.isEmpty() || !apelido.isEmpty() || !placa.isEmpty() || !tell.isEmpty() || !senha.isEmpty() || !email.isEmpty()){
+                    Regist();
+                }else {
+                    editNome.setError("Insera seu Nome!");
+                    editCpf.setError("Insera seu CPF!!");
+                    editApelido.setError("Insera seu Apelido!!");
+                    editPlaca.setError("Insera sua Placa!!");
+                    editTell.setError("Insera seu Telefone!!");
+                    editSenha.setError("Insera sua Senha!!");
+                    editEmail.setError("Insera seu Email!!");
+
+                    progressBar.setVisibility(View.GONE);
+                    btnCadastro.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -97,13 +120,13 @@ public class CadastroActivity extends AppCompatActivity {
                                 Toast.makeText(CadastroActivity.this, "Resgistrado com Sucesso!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
                                 startActivity(intent);
+                            }else {
+
                             }
 
                         } catch (JSONException e1) {
                             e1.printStackTrace();
-                            Toast.makeText(CadastroActivity.this, "Resgistrado com Sucesso!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                            Toast.makeText(CadastroActivity.this, "Resgistro teve um erro:" + e1.toString(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                             btnCadastro.setVisibility(View.VISIBLE);
                         }
@@ -112,7 +135,7 @@ public class CadastroActivity extends AppCompatActivity {
                 new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CadastroActivity.this, "Resgistrado com Sucesso!" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroActivity.this, "Resgistro teve um Erro:" + error.toString() , Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                         btnCadastro.setVisibility(View.VISIBLE);
                     }
