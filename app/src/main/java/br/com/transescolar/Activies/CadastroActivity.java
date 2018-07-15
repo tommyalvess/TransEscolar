@@ -50,33 +50,32 @@ public class CadastroActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Cadastro");     //Titulo para ser exibido na sua Action Bar em frente à seta
 
-        progressBar = (ProgressBar)findViewById(R.id.progressBarCadastro);
-        editNome = (EditText)findViewById(R.id.editNome);
-        editCpf = (EditText)findViewById(R.id.editCpf2);
-        editApelido = (EditText)findViewById(R.id.editApelido2);
-        editPlaca = (EditText)findViewById(R.id.editPlaca);
-        editTell = (EditText)findViewById(R.id.editTell);
-        editSenha = (EditText)findViewById(R.id.editSenha);
-        editEmail = (EditText)findViewById(R.id.editEmail);
-
-
-        btnCadastro = (Button)findViewById(R.id.btnSaveCadastro);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar = findViewById(R.id.progressBarCadastro);
+        editNome = findViewById(R.id.editNome);
+        editCpf = findViewById(R.id.editCpf2);
+        editApelido = findViewById(R.id.editApelido2);
+        editPlaca = findViewById(R.id.editPlaca);
+        editTell = findViewById(R.id.editTell);
+        editSenha = findViewById(R.id.editSenha);
+        editEmail = findViewById(R.id.editEmail);
+        btnCadastro = findViewById(R.id.btnSaveCadastro);
 
         btnCadastro.setOnClickListener(new View.OnClickListener() {
-            String nome = editNome.getText().toString().trim();
-            String cpf = editCpf.getText().toString().trim();
-            String apelido = editApelido.getText().toString().trim();
-            String placa = editPlaca.getText().toString().trim();
-            String tell = editTell.getText().toString().trim();
-            String senha = editSenha.getText().toString().trim();
-            String email = editEmail.getText().toString().trim();
-
             @Override
             public void onClick(View v) {
-                if (!nome.isEmpty() && !cpf.isEmpty() && !apelido.isEmpty() && !placa.isEmpty() && !tell.isEmpty() && !senha.isEmpty() && !email.isEmpty()){
+                String nome = editNome.getText().toString().trim();
+                String cpf = editCpf.getText().toString().trim();
+                String apelido = editApelido.getText().toString().trim();
+                String placa = editPlaca.getText().toString().trim();
+                String tell = editTell.getText().toString().trim();
+                String senha = editSenha.getText().toString().trim();
+                String email = editEmail.getText().toString().trim();
+
+                if (!nome.isEmpty() || !cpf.isEmpty()){
                     Regist();
-                } else if(!nome.isEmpty() || !cpf.isEmpty() || !apelido.isEmpty() || !placa.isEmpty() || !tell.isEmpty() || !senha.isEmpty() || !email.isEmpty()){
+                } if (!apelido.isEmpty() || !placa.isEmpty()){
+                    Regist();
+                } if (!tell.isEmpty() || !senha.isEmpty() || !email.isEmpty()){
                     Regist();
                 }else {
                     editNome.setError("Insera seu Nome!");
@@ -86,9 +85,6 @@ public class CadastroActivity extends AppCompatActivity {
                     editTell.setError("Insera seu Telefone!!");
                     editSenha.setError("Insera sua Senha!!");
                     editEmail.setError("Insera seu Email!!");
-
-                    progressBar.setVisibility(View.GONE);
-                    btnCadastro.setVisibility(View.VISIBLE);
                 }
             }
         });
