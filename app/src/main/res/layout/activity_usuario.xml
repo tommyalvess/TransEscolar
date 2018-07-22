@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,6 +12,7 @@
     android:layout_height="match_parent"
     tools:context=".Activies.UsuarioActivity"
     tools:layout_editor_absoluteY="81dp">
+
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/passageiros"
@@ -18,7 +24,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:onClick="passageiro"
-        android:src="@drawable/common_google_signin_btn_text_light_normal"
+        android:src="@drawable/user"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,6 +42,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="75dp"
         android:text="Nome:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textCpfU"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passageiros" />
@@ -48,6 +55,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Email:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textApelidoU"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCpfU" />
@@ -60,6 +68,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="CPF:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textEmailU"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNomeU" />
@@ -72,6 +81,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Apelido:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/texPlacaU"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEmailU" />
@@ -84,6 +94,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Placa:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textTellU"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textApelidoU" />
@@ -96,8 +107,23 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="Telefone:"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texPlacaU" />
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_style"
+        android:text="SAIR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

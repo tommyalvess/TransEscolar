@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import br.com.transescolar.Conexao.SharedPrefManager;
 import br.com.transescolar.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -19,6 +20,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //if the user is already logged in we will directly start the profile activity
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, HomeActivity.class));
+            return;
+        }
 
         CircleImageView imgPass = (CircleImageView) findViewById(R.id.passageiros);
         CircleImageView imgEscola = (CircleImageView) findViewById(R.id.escolas);
