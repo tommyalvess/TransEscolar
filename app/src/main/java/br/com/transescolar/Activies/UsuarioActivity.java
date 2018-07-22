@@ -45,12 +45,12 @@ public class UsuarioActivity extends AppCompatActivity {
         Tios user = SharedPrefManager.getInstance(this).getUser();
 
         //setting the values to the textviews
-        textNomeU.setText("Nome: " + user.getNome());
-        textEmailU.setText("Email: " + user.getEmail());
-        textCpfU.setText("CPF: " + user.getCpf());
-        textApelidoU.setText("Apelido: " + user.getApelido());
-        texPlacaU.setText("Placa: " + user.getPlaca());
-        textTellU.setText("Telefone: " + user.getTell());
+        textNomeU.setText(String.valueOf("Nome: " + user.getNome()));
+        textEmailU.setText(String.valueOf("Email: " + user.getEmail()));
+        textCpfU.setText(String.valueOf("Cpf: " + user.getCpf()));
+        textApelidoU.setText(String.valueOf("Apelido: " + user.getApelido()));
+        texPlacaU.setText(String.valueOf("Placa: " + user.getPlaca()));
+        textTellU.setText(String.valueOf("Telefone: " + user.getTell()));
 
         //when the user presses logout button
         //calling the logout method

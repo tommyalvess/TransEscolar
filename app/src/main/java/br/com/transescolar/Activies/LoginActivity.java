@@ -216,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void Cadastro(View view) {
-        Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+        Intent intent = new Intent(LoginActivity.this, Cadastro2Activity.class);
         startActivity(intent);
     }
 }

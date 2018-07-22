@@ -17,6 +17,7 @@ public class SharedPrefManager {
     private static final String KEY_APELIDO = "keyapelido";
     private static final String KEY_PLACA = "keyplaca";
     private static final String KEY_TELL = "keytell";
+    private static final String KEY_SENHA = "keysenha";
     private static final String KEY_ID = "keyid";
 
     private static SharedPrefManager mInstance;
@@ -45,13 +46,14 @@ public class SharedPrefManager {
         editor.putString(KEY_APELIDO, user.getApelido());
         editor.putString(KEY_PLACA, user.getPlaca());
         editor.putString(KEY_TELL, user.getTell());
+        editor.putString(KEY_SENHA, user.getSenha());
         editor.apply();
     }
 
     //vai checar se estão ou nao logado
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_USERNAME, null) != null;
+        return sharedPreferences.getString(KEY_CPF, null) != null;
     }
 
     //metodo vai dar o user logado
@@ -64,6 +66,7 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_CPF, null),
                 sharedPreferences.getString(KEY_APELIDO, null),
                 sharedPreferences.getString(KEY_PLACA, null),
+                sharedPreferences.getString(KEY_SENHA, null),
                 sharedPreferences.getString(KEY_TELL, null)
         );
     }
