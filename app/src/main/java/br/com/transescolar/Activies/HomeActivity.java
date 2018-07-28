@@ -20,12 +20,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //if the user is already logged in we will directly start the profile activity
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, HomeActivity.class));
-            return;
-        }
 
         CircleImageView imgPass = (CircleImageView) findViewById(R.id.passageiros);
         CircleImageView imgEscola = (CircleImageView) findViewById(R.id.escolas);
@@ -39,9 +33,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("PassageirosActivity","passageiro");
-                Toast.makeText(v.getContext(), // <- Line changed
-                        "PASSAGEIROS",
-                        Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(HomeActivity.this, PassageirosActivity.class);
                 startActivity(intent);
             }
@@ -51,9 +42,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("EscolasActivity","escola");
-                Toast.makeText(v.getContext(), // <- Line changed
-                        "ESCOLAS",
-                        Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(HomeActivity.this, EscolasActivity.class);
                 startActivity(intent);
 
@@ -64,9 +52,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("IntinerarioActivity","intinerario");
-                Toast.makeText(v.getContext(), // <- Line changed
-                        "INTINERARIO",
-                        Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(HomeActivity.this, IntinerarioActivity.class);
                 startActivity(intent);
             }
@@ -75,10 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         imgMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("MapActivity","mapa");
-                Toast.makeText(v.getContext(), // <- Line changed
-                        "MAPA",
-                        Toast.LENGTH_LONG).show();
+                Log.d("MapActivity","MapActivity");
                 Intent intent = new Intent(HomeActivity.this, MapsExActivity.class);
                 startActivity(intent);
             }
@@ -87,11 +69,8 @@ public class HomeActivity extends AppCompatActivity {
         imgUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("UsuarioActivity","mapa");
-                Toast.makeText(v.getContext(), // <- Line changed
-                        "USUÁRIO",
-                        Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(HomeActivity.this, UsuarioActivity.class);
+                Log.d("UsuarioActivity","UsuarioActivity");
+                                Intent intent = new Intent(HomeActivity.this, UsuarioActivity.class);
                 startActivity(intent);
             }
         }); // Fim do imgUsuario
@@ -99,10 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         imgPais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("PaisActivity","mapa");
-                Toast.makeText(v.getContext(), // <- Line changed
-                        "PAIS",
-                        Toast.LENGTH_LONG).show();
+                Log.d("PaisActivity","PaisActivity");
                 Intent intent = new Intent(HomeActivity.this, PaisActivity.class);
                 startActivity(intent);
             }

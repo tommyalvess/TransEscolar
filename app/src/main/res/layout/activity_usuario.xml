@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
 
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,117 +8,280 @@
     tools:context=".Activies.UsuarioActivity"
     tools:layout_editor_absoluteY="81dp">
 
-
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/passageiros"
-        android:layout_width="395dp"
-        android:layout_height="168dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="360dp"
+        android:layout_height="190dp"
+        android:background="#007FFF"
         android:clickable="true"
         android:onClick="passageiro"
         android:src="@drawable/user"
-        app:civ_border_color="#FF000000"
+        app:civ_border_color="#000"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints,OnClick" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textNomeU"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="75dp"
-        android:text="Nome:"
+        android:layout_height="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Nome"
+        android:textColor="@color/AzulTema"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textCpfU"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textNomeU2"
         app:layout_constraintTop_toBottomOf="@+id/passageiros" />
+
+    <TextView
+        android:id="@+id/textNomeU2"
+        android:layout_width="43dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Nome:"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/passageiros" />
+
+    <TextView
+        android:id="@+id/textEmailU2"
+        android:layout_width="48dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Email:"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/textCpfU2" />
 
     <TextView
         android:id="@+id/textEmailU"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Email:"
+        android:layout_height="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Email"
+        android:textColor="@color/AzulTema"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textApelidoU"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textEmailU2"
         app:layout_constraintTop_toBottomOf="@+id/textCpfU" />
+
+    <TextView
+        android:id="@+id/textCpfU2"
+        android:layout_width="32dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="20dp"
+        android:text="CPF:"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/textNomeU2" />
 
     <TextView
         android:id="@+id/textCpfU"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="CPF:"
+        android:layout_height="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="CPF"
+        android:textColor="@color/AzulTema"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textEmailU"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textCpfU2"
         app:layout_constraintTop_toBottomOf="@+id/textNomeU" />
+
+    <TextView
+        android:id="@+id/textApelidoU2"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Apelido:"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/textEmailU2" />
 
     <TextView
         android:id="@+id/textApelidoU"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Apelido:"
+        android:text="Apelido"
+        android:textColor="@color/AzulTema"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/texPlacaU"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/textApelidoU2"
         app:layout_constraintTop_toBottomOf="@+id/textEmailU" />
+
+    <TextView
+        android:id="@+id/texPlacaU2"
+        android:layout_width="43dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Placa:"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/textApelidoU2" />
 
     <TextView
         android:id="@+id/texPlacaU"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Placa:"
+        android:text="Placa"
+        android:textColor="@color/AzulTema"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textTellU"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/texPlacaU2"
         app:layout_constraintTop_toBottomOf="@+id/textApelidoU" />
+
+
+    <TextView
+        android:id="@+id/textTellU2"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Telefone:"
+        android:textColor="#000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/texPlacaU2" />
 
     <TextView
         android:id="@+id/textTellU"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="75dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Telefone:"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texPlacaU" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="135dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/button_style"
-        android:text="SAIR"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="16dp"
+        android:text="Telefone"
+        android:textColor="@color/AzulTema"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/textTellU2"
+        app:layout_constraintTop_toBottomOf="@+id/texPlacaU" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="52dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="52dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passageiros"
+        app:srcCompat="@drawable/user_perfil" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="19dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@drawable/cpf_perfil" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="20dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:srcCompat="@drawable/email_perfil" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="24dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        app:srcCompat="@drawable/bus_perfil" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="26dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:srcCompat="@drawable/tell_perfil" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="30dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:srcCompat="@drawable/apelido_perfil" />
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <android.support.design.widget.FloatingActionButton
+           android:id="@+id/fab"
+           android:layout_width="49dp"
+           android:layout_height="60dp"
+           android:layout_gravity="end|bottom"
+           android:layout_margin="16dp"
+           android:src="@drawable/sair"
+           app:backgroundTint="#00FF7F"
+           tools:ignore="MissingConstraints"
+           tools:layout_editor_absoluteX="295dp"
+           tools:layout_editor_absoluteY="446dp" />
+   </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
-</ScrollView>

@@ -39,12 +39,12 @@ public class CadastroActivity extends AppCompatActivity {
     EditText editNome, editCpf, editApelido, editPlaca, editTell, editSenha, editEmail, editLogin;
     Button btnCadastro;
     ProgressBar progressBar;
-    private static String URL_REGIST = "http://192.168.1.33/Teste1Php/register1.php";
+    private static String URL_REGIST = "http://192.168.1.33/Teste1Php/register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_cadastro2);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
@@ -64,7 +64,6 @@ public class CadastroActivity extends AppCompatActivity {
         btnCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String login = editCpf.getText().toString().trim();
                 String senha = editSenha.getText().toString().trim();
                 String nome = editNome.getText().toString().trim();
                 String cpf = editCpf.getText().toString().trim();
@@ -78,13 +77,13 @@ public class CadastroActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     btnCadastro.setVisibility(View.GONE);
                 }else {
-                    editNome.setError("Insera seu CPF!");
+                    editNome.setError("Insera seu Nome!");
                     editCpf.setError("Insera seu CPF!");
-                    editApelido.setError("Insera seu CPF!");
-                    editPlaca.setError("Insera seu CPF!");
-                    editTell.setError("Insera seu CPF!");
-                    editSenha.setError("Insera seu CPF!");
-                    editEmail.setError("Insera seu CPF!");
+                    editApelido.setError("Insera seu Apelido!");
+                    editPlaca.setError("Insera sua Placa!");
+                    editTell.setError("Insera seu Telefone!");
+                    editSenha.setError("Insera sua senha!");
+                    editEmail.setError("Insera seu Email!");
                     progressBar.setVisibility(View.GONE);
                     btnCadastro.setVisibility(View.VISIBLE);
                 }
@@ -94,7 +93,6 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void Regist() {
-        final String login = this.editCpf.getText().toString().trim();
         final String senha = this.editSenha.getText().toString().trim();
         final String nome = this.editNome.getText().toString().trim();
         final String email = this.editEmail.getText().toString().trim();
@@ -141,14 +139,13 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("login", login);
-                params.put("senha", senha);
                 params.put("nome", nome);
                 params.put("email", email);
                 params.put("cpf", cpf);
                 params.put("apelido", apelido);
                 params.put("placa", placa);
                 params.put("tell", tell);
+                params.put("senha", senha);
                 return params;
             }
         };

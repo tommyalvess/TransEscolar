@@ -1,6 +1,8 @@
 package br.com.transescolar.Activies;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 
+import java.util.HashMap;
+
+import br.com.transescolar.Conexao.SessionManager;
 import br.com.transescolar.Conexao.SharedPrefManager;
 import br.com.transescolar.Model.Tios;
 import br.com.transescolar.R;
@@ -19,44 +24,59 @@ public class UsuarioActivity extends AppCompatActivity {
     TextView textNomeU, textEmailU, textCpfU, textApelidoU, texPlacaU, textTellU;
     Button btnLogout;
 
+    SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
 
-        //if the user is not logged in
-        //starting the login activity
-//        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
-//            finish();
-//            startActivity(new Intent(this, LoginActivity.class));
-//        }
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        getSupportActionBar().setTitle("Usuários");     //Titulo para ser exibido na sua Action Bar em frente à seta
 
-        textNomeU = (TextView) findViewById(R.id.textNomeU);
-        textEmailU = (TextView) findViewById(R.id.textEmailU);
-        textCpfU = (TextView) findViewById(R.id.textCpfU);
-        textApelidoU = (TextView) findViewById(R.id.textApelidoU);
-        texPlacaU = (TextView) findViewById(R.id.texPlacaU);
-        textTellU = (TextView) findViewById(R.id.textTellU);
+        textNomeU =  findViewById(R.id.textNomeU);
+        textEmailU =  findViewById(R.id.textEmailU);
+        textCpfU =  findViewById(R.id.textCpfU);
+        textApelidoU =  findViewById(R.id.textApelidoU);
+        texPlacaU =  findViewById(R.id.texPlacaU);
+        textTellU =  findViewById(R.id.textTellU);
 
-        Tios user = SharedPrefManager.getInstance(this).getUser();
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        String nNome = user.get(sessionManager.NAME);
+        String nEmail = user.get(sessionManager.EMAIL);
+        String nCPF = user.get(sessionManager.CPF);
+        String nApelido = user.get(sessionManager.APELIDO);
+        String nPlaca = user.get(sessionManager.PLACA);
+        String nTell = user.get(sessionManager.TELL);
 
-        //setting the values to the textviews
-        textNomeU.setText(String.valueOf("Nome: " + user.getNome()));
-        textEmailU.setText(String.valueOf("Email: " + user.getEmail()));
-        textCpfU.setText(String.valueOf("Cpf: " + user.getCpf()));
-        textApelidoU.setText(String.valueOf("Apelido: " + user.getApelido()));
-        texPlacaU.setText(String.valueOf("Placa: " + user.getPlaca()));
-        textTellU.setText(String.valueOf("Telefone: " + user.getTell()));
+        textNomeU.setText(nNome);
+        textEmailU.setText(nEmail);
+        textCpfU.setText(nCPF);
+        textApelidoU.setText(nApelido);
+        texPlacaU.setText(nPlaca);
+        textTellU.setText(nTell);
+
+        getSupportActionBar().setTitle(nApelido);     //Titulo para ser exibido na sua Action Bar em frente à seta
 
         //when the user presses logout button
         //calling the logout method
-        findViewById(R.id.btnLogout).setOnClickListener(new View.OnClickListener() {
+//        findViewById(R.id.btnLogout).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                SharedPrefManager.getInstance(getApplicationContext()).logout();
+//            }
+//        });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Snackbar.make(view, "Volte em breve!", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
                 finish();
                 SharedPrefManager.getInstance(getApplicationContext()).logout();
             }

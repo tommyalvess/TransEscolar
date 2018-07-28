@@ -3,6 +3,7 @@ package br.com.transescolar.Activies;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -187,8 +188,6 @@ public class Cadastro2Activity extends AppCompatActivity {
                                 userJson.getString("senha")
                         );
 
-                        //storing the user in shared preferences
-                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
                         //starting the profile activity
                         finish();
@@ -225,4 +224,5 @@ public class Cadastro2Activity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
