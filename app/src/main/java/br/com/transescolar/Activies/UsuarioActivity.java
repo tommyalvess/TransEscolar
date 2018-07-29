@@ -102,7 +102,6 @@ public class UsuarioActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_usuario, menu);
-
         return true;
 
     };
@@ -113,10 +112,4 @@ public class UsuarioActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sair(View view) {
-
-        SharedPrefManager.getInstance(getApplicationContext()).sair();
-        Intent intent = new Intent(UsuarioActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
 }

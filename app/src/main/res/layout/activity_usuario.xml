@@ -18,7 +18,7 @@
         android:src="@drawable/user"
         app:civ_border_color="#000"
         app:civ_border_width="2dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints,OnClick" />
 
     <TextView
         android:id="@+id/textNomeU"
@@ -60,10 +60,10 @@
     <TextView
         android:id="@+id/textEmailU"
         android:layout_width="0dp"
-        android:layout_height="15dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:text="Email"
         android:textColor="@color/AzulTema"
         android:textStyle="bold"
@@ -270,16 +270,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="170dp">
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_width="49dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:src="@drawable/sair"
+            android:src="@drawable/logout"
             app:backgroundTint="#00FF7F"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="295dp"

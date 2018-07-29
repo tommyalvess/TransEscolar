@@ -7,5 +7,115 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.com.transescolar.Activies.EditarUsuarioActivity"
     tools:showIn="@layout/activity_editar_usuario">
+    <EditText
+        android:id="@+id/editNomeT"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit_text_style"
+        android:ems="10"
+        android:hint="Nome:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editEmailT"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_style"
+        android:ems="10"
+        android:hint="Email:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/editNomeT"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editPlaca"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_style"
+        android:ems="10"
+        android:hint="Placa:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/editApelido2"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editCpfT"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_style"
+        android:ems="10"
+        android:hint="CPF:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/editEmailT"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTellT"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_style"
+        android:ems="10"
+        android:hint="Telefone:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/editPlaca"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editApelido2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_style"
+        android:ems="10"
+        android:hint="Apelido:"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/editCpfT"
+        tools:ignore="MissingConstraints" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="30dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="30dp" />
 
 </android.support.constraint.ConstraintLayout>
