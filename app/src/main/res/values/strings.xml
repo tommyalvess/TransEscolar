@@ -15,4 +15,5 @@
     <string name="pref_file">br.com.pref_file</string>
     <string name="pref_user_name">br.com.pref_user_name</string>
     <string name="pref_user_status">br.com.pref_user_status</string>
+    <string name="title_activity_editar_usuario">EditarUsuarioActivity</string>
 </resources>

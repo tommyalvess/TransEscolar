@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
+import br.com.transescolar.Conexao.SessionManager;
 import br.com.transescolar.Conexao.SharedPrefManager;
 import br.com.transescolar.R;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -14,12 +17,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeActivity extends AppCompatActivity {
 
 
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sessionManager = new SessionManager(this);
+
+        sessionManager.checkLogin();
+
+        // pegar infs da session
+        HashMap<String, String> user = sessionManager.getUserDetail();
 
         CircleImageView imgPass = (CircleImageView) findViewById(R.id.passageiros);
         CircleImageView imgEscola = (CircleImageView) findViewById(R.id.escolas);

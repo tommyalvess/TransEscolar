@@ -1,7 +1,6 @@
 package br.com.transescolar.Activies;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,14 +26,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.transescolar.API.ApiAuthenticationClient;
-import br.com.transescolar.Conexao.RequestHandler;
 import br.com.transescolar.Conexao.SessionManager;
-import br.com.transescolar.Conexao.SharedPrefManager;
-import br.com.transescolar.Conexao.URLs;
-import br.com.transescolar.Model.Tios;
 import br.com.transescolar.R;
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,13 +46,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         sessionManager = new SessionManager(this);
-
-        //if the user is already logged in we will directly start the profile activity
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, HomeActivity.class));
-            return;
-        }
 
         editCpf = findViewById(R.id.login_main);
         editSenha = findViewById(R.id.login_password);

@@ -103,7 +103,7 @@
         android:layout_marginBottom="42dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="218dp"
-        android:src="@drawable/test"
+        android:src="@drawable/checklist"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/map"

@@ -10,7 +10,7 @@ import br.com.transescolar.Model.Tios;
 public class SharedPrefManager {
 
 
-    private static final String SHARED_PREF_NAME = "simplifiedcodingsharedpref";
+    private static final String SHARED_PREF_NAME = "LOGIN";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_EMAIL = "keyemail";
     private static final String KEY_CPF = "keycpf";
@@ -36,7 +36,7 @@ public class SharedPrefManager {
 
     //metodo que fez o user logar
     //esse metedo guarda as inf
-    public void userLogin(Tios user) {
+    public void userLogar(Tios user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_ID, user.getId());
@@ -51,13 +51,13 @@ public class SharedPrefManager {
     }
 
     //vai checar se estão ou nao logado
-    public boolean isLoggedIn() {
+    public boolean estaLogado() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_CPF, null) != null;
     }
 
     //metodo vai dar o user logado
-    public Tios getUser() {
+    public Tios pegarUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new Tios(
                 sharedPreferences.getInt(KEY_ID, -1),
@@ -72,11 +72,10 @@ public class SharedPrefManager {
     }
 
     //metodo vai deslogar o user
-    public void logout() {
+    public void sair() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, LoginActivity.class));
     }
 }

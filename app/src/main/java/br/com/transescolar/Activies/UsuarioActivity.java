@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +24,6 @@ import br.com.transescolar.R;
 public class UsuarioActivity extends AppCompatActivity {
 
     TextView textNomeU, textEmailU, textCpfU, textApelidoU, texPlacaU, textTellU;
-    Button btnLogout;
 
     SessionManager sessionManager;
 
@@ -77,8 +78,12 @@ public class UsuarioActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Snackbar.make(view, "Volte em breve!", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+
+                sessionManager.logout();
                 finish();
-                SharedPrefManager.getInstance(getApplicationContext()).logout();
+                Intent intent = new Intent(UsuarioActivity.this, LoginActivity.class);
+                startActivity(intent);
+
             }
         });
     }
@@ -92,5 +97,26 @@ public class UsuarioActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_usuario, menu);
+
+        return true;
+
+    };
+
+    public void editar(MenuItem item) {
+        Log.d("EditActivity","MapActivity");
+        Intent intent = new Intent(UsuarioActivity.this, EditarUsuarioActivity.class);
+        startActivity(intent);
+    }
+
+    public void sair(View view) {
+
+        SharedPrefManager.getInstance(getApplicationContext()).sair();
+        Intent intent = new Intent(UsuarioActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }

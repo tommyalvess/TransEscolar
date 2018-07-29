@@ -41,12 +41,6 @@ public class Cadastro2Activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Cadastro");     //Titulo para ser exibido na sua Action Bar em frente à seta
 
-        //if the user is already logged in we will directly start the profile activity
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, HomeActivity.class));
-            return;
-        }
 
         editNome = (EditText) findViewById(R.id.editNomeT);
         editCpf = (EditText) findViewById(R.id.editCpfT);

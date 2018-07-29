@@ -50,6 +50,7 @@ public class SessionManager {
         return sharedPreferences.getBoolean(LOGIN, false);
     }
 
+
     public void checkLogin(){
 
         if (!this.isLoggin()){
@@ -73,13 +74,18 @@ public class SessionManager {
         return user;
     }
 
-    public void logout(){
+    public boolean logout(){
 
+//        editor.clear();
+//        editor.commit();
+//        Intent i = new Intent(context, LoginActivity.class);
+//        context.startActivity(i);
+//        ((HomeActivity) context).finish();
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
-        editor.commit();
-        Intent i = new Intent(context, LoginActivity.class);
-        context.startActivity(i);
-        ((HomeActivity) context).finish();
-
+        editor.apply();
+        return true;
     }
 }

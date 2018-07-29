@@ -266,22 +266,25 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
         app:srcCompat="@drawable/apelido_perfil" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="170dp">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <android.support.design.widget.FloatingActionButton
-           android:id="@+id/fab"
-           android:layout_width="49dp"
-           android:layout_height="60dp"
-           android:layout_gravity="end|bottom"
-           android:layout_margin="16dp"
-           android:src="@drawable/sair"
-           app:backgroundTint="#00FF7F"
-           tools:ignore="MissingConstraints"
-           tools:layout_editor_absoluteX="295dp"
-           tools:layout_editor_absoluteY="446dp" />
-   </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="49dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/sair"
+            app:backgroundTint="#00FF7F"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="295dp"
+            tools:layout_editor_absoluteY="446dp" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
