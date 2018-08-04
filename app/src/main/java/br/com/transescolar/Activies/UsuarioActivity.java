@@ -134,7 +134,7 @@ public class UsuarioActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(UsuarioActivity.this, "Opss!! Algo deu errado VolleyError", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UsuarioActivity.this, "Opss!! Sem Conexão a internet", Toast.LENGTH_SHORT).show();
                         Log.e("VolleyError", "Error", error);
                     }
                 }){

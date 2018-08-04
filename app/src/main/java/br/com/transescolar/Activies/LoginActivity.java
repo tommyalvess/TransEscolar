@@ -1,6 +1,8 @@
 package br.com.transescolar.Activies;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -140,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        loginProgress.setVisibility(View.GONE);
-                        btnLogin.setVisibility(View.VISIBLE);
+                        Toast.makeText(LoginActivity.this, "Opss!! Sem Conexão a internet", Toast.LENGTH_SHORT).show();
+
                         Log.e(TAG, "response: " + error);
                     }
                 }){
@@ -158,6 +160,28 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    public  boolean verificaConexao() {
+        boolean conectado;
+        ConnectivityManager conectivtyManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+            conectado = true;
+        } else {
+            conectado = false;
+        }
+        return conectado;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (verificaConexao() == true){
+            loginProgress.setVisibility(View.GONE);
+            btnLogin.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Conexão estabelecida!", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void Cadastro(View view) {
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);

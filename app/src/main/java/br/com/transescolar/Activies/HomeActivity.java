@@ -1,6 +1,8 @@
 package br.com.transescolar.Activies;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,5 +97,30 @@ public class HomeActivity extends AppCompatActivity {
         }); // Fim do imgPais
 
     }//OnCreate
+
+    public  boolean verificaConexao() {
+        boolean conectado;
+        ConnectivityManager conectivtyManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+            conectado = true;
+        } else {
+            conectado = false;
+        }
+        return conectado;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (verificaConexao() == true){
+            sessionManager.checkLogin();
+        }else {
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 
 }//Class
