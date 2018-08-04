@@ -88,18 +88,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
-                              JSONObject json = new JSONObject( response );
+                              JSONObject json = new JSONObject(response);
                               JSONArray nameArray = json.names();
                               JSONArray valArray = json.toJSONArray( nameArray );
 
 
                             if (!json.optBoolean("1")){
-                              //startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 
                               for ( int i = 0; i < valArray.length(); i++) {
-
-                                  Toast.makeText(getApplicationContext(), json.getString("message"), Toast.LENGTH_SHORT).show();
-
                                   JSONObject object = valArray.getJSONObject(i);
                                   String id = object.getString("idTios").trim();
                                   String nome = object.getString("nome").trim();

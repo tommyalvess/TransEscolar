@@ -12,8 +12,22 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import br.com.transescolar.Conexao.SessionManager;
 import br.com.transescolar.Conexao.SharedPrefManager;
@@ -24,6 +38,8 @@ import br.com.transescolar.R;
 public class UsuarioActivity extends AppCompatActivity {
 
     TextView textNomeU, textEmailU, textCpfU, textApelidoU, texPlacaU, textTellU;
+    private static String URL_READ = "http://192.168.1.33/Teste1Php/read_tios.php?apicall=findAll";
+    String getId;
 
     SessionManager sessionManager;
 
@@ -45,7 +61,9 @@ public class UsuarioActivity extends AppCompatActivity {
         texPlacaU =  findViewById(R.id.texPlacaU);
         textTellU =  findViewById(R.id.textTellU);
 
+
         HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(sessionManager.ID);
         String nNome = user.get(sessionManager.NAME);
         String nEmail = user.get(sessionManager.EMAIL);
         String nCPF = user.get(sessionManager.CPF);
@@ -53,24 +71,8 @@ public class UsuarioActivity extends AppCompatActivity {
         String nPlaca = user.get(sessionManager.PLACA);
         String nTell = user.get(sessionManager.TELL);
 
-        textNomeU.setText(nNome);
-        textEmailU.setText(nEmail);
-        textCpfU.setText(nCPF);
-        textApelidoU.setText(nApelido);
-        texPlacaU.setText(nPlaca);
-        textTellU.setText(nTell);
 
         getSupportActionBar().setTitle(nApelido);     //Titulo para ser exibido na sua Action Bar em frente à seta
-
-        //when the user presses logout button
-        //calling the logout method
-//        findViewById(R.id.btnLogout).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//                SharedPrefManager.getInstance(getApplicationContext()).logout();
-//            }
-//        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +88,65 @@ public class UsuarioActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Pegar as infs do user
+    private void getUserDetail(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("Mensagem", response.toString());
+
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            JSONArray nameArray = json.names();
+                            JSONArray valArray = json.toJSONArray( nameArray );
+
+                            if (!json.optBoolean("1")){
+                                for (int i = 0; i < valArray.length(); i++) {
+                                    JSONObject object = valArray.getJSONObject(i);
+                                    String id = object.getString("idTios").trim();
+                                    String nome = object.getString("nome").trim();
+                                    String email = object.getString("email").trim();
+                                    String cpf = object.getString("cpf").trim();
+                                    String apelido = object.getString("apelido").trim();
+                                    String placa = object.getString("placa").trim();
+                                    String tell = object.getString("tell").trim();
+
+                                    textNomeU.setText(nome);
+                                    textEmailU.setText(email);
+                                    textCpfU.setText(cpf);
+                                    textApelidoU.setText(apelido);
+                                    texPlacaU.setText(placa);
+                                    textTellU.setText(tell);
+
+                                }
+                            }else {
+                                Toast.makeText(UsuarioActivity.this,json.getString("message"),Toast.LENGTH_LONG).show();
+
+                            }
+                        }catch ( JSONException e ) {
+                            Log.e("JSON", "Error parsing JSON", e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(UsuarioActivity.this, "Opss!! Algo deu errado VolleyError", Toast.LENGTH_SHORT).show();
+                        Log.e("VolleyError", "Error", error);
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("idTios", getId);
+                return param;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -110,6 +171,12 @@ public class UsuarioActivity extends AppCompatActivity {
         Log.d("EditActivity","MapActivity");
         Intent intent = new Intent(UsuarioActivity.this, EditarUsuarioActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserDetail();
     }
 
 }

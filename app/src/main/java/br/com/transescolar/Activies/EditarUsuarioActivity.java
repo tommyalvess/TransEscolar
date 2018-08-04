@@ -1,5 +1,6 @@
 package br.com.transescolar.Activies;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,9 @@ public class EditarUsuarioActivity extends AppCompatActivity {
     EditText editNomeU, editEmailU, editCpfU, editApelidoU, editPlacaU, editTellU;
     SessionManager sessionManager;
     String getId;
+    ProgressBar progess;
     private static String URL_READ = "http://192.168.1.33/Teste1Php/read_tios.php?apicall=findAll";
+    private static String URL_EDIT = "http://192.168.1.33/Teste1Php/edit_detail.php";
 
 
     @Override
@@ -54,49 +57,125 @@ public class EditarUsuarioActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
-        editNomeU =  findViewById(R.id.editNomeT);
-        editEmailU =  findViewById(R.id.editEmailT);
-        editCpfU =  findViewById(R.id.editCpfT);
-        editApelidoU =  findViewById(R.id.editApelido2);
-        editPlacaU =  findViewById(R.id.editPlaca);
-        editTellU =  findViewById(R.id.editTellT);
+        editNomeU =  findViewById(R.id.editarNome);
+        editEmailU =  findViewById(R.id.editarEmailT);
+        editCpfU =  findViewById(R.id.editarCpfT);
+        editApelidoU =  findViewById(R.id.editarApelido2);
+        editPlacaU =  findViewById(R.id.editarPlaca);
+        editTellU =  findViewById(R.id.editarTellT);
+        progess = findViewById(R.id.progess);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Alterado com Sucesso!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                SaveEditDetail();
             }
         });
 
     }
 
-    private void getUserDetail(){
-        final ProgressDialog progressBar = new ProgressDialog(this);
-        progressBar.setMessage("Espere...");
-        progressBar.show();
+    //Salvar as infs atualizada
+    private void SaveEditDetail() {
 
+        final String id = getId;
+        final String nome = this.editNomeU.getText().toString().trim();
+        final String email = this.editEmailU.getText().toString().trim();
+        final String cpf = this.editCpfU.getText().toString().trim();
+        final String apelido = this.editApelidoU.getText().toString().trim();
+        final String placa = this.editPlacaU.getText().toString().trim();
+        final String tell = this.editTellU.getText().toString().trim();
+
+        progess.setVisibility(View.VISIBLE);
+        final FloatingActionButton fab = findViewById(R.id.fab);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //progess.setVisibility(View.GONE);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            //boolean success = jsonObject.getBoolean("success");
+                            String success = jsonObject.getString("error");
+
+                            if (success.equals("1")){
+                                sessionManager.createSession(id, nome, email, cpf, apelido, placa, tell);
+                                progess.setVisibility(View.GONE);
+                                fab.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Snackbar.make(view, "Alterado com Sucesso!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
+                                });
+                                Toast.makeText(EditarUsuarioActivity.this,jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+
+                            }else {
+                                Toast.makeText(EditarUsuarioActivity.this,jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+                                fab.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Snackbar.make(view, "Opss! Algo deu errado!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
+                                });
+                                progess.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e1) {
+                            progess.setVisibility(View.GONE);
+                            Log.e("JSON", "Error parsing JSON", e1);
+
+                        }
+                        Log.e(TAG, "response: " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progess.setVisibility(View.GONE);
+                        Log.e("JSON", "Error parsing JSON", error);
+
+                    }
+                }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("nome", nome);
+                params.put("email", email);
+                params.put("cpf", cpf);
+                params.put("apelido", apelido);
+                params.put("placa", placa);
+                params.put("tell", tell);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    //Pegar as infs do user
+    private void getUserDetail(){
+        progess.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progess.setVisibility(View.GONE);
                         Log.i(TAG, response.toString());
 
                         try {
-                            JSONObject json = new JSONObject( response );
+                            JSONObject json = new JSONObject(response);
                             JSONArray nameArray = json.names();
                             JSONArray valArray = json.toJSONArray( nameArray );
 
-
                             if (!json.optBoolean("1")){
-                                for ( int i = 0; i < valArray.length(); i++) {
-
-                                    Toast.makeText(getApplicationContext(), json.getString("message"), Toast.LENGTH_SHORT).show();
-
+                                for (int i = 0; i < valArray.length(); i++) {
                                     JSONObject object = valArray.getJSONObject(i);
                                     String id = object.getString("idTios").trim();
                                     String nome = object.getString("nome").trim();
@@ -112,19 +191,28 @@ public class EditarUsuarioActivity extends AppCompatActivity {
                                     editApelidoU.setText(apelido);
                                     editPlacaU.setText(placa);
                                     editTellU.setText(tell);
+
+                                    progess.setVisibility(View.GONE);
+                                    Log.e(TAG, "response: " + response);
                                 }
                             }else {
                                 Toast.makeText(EditarUsuarioActivity.this,json.getString("message"),Toast.LENGTH_LONG).show();
+                                progess.setVisibility(View.GONE);
+
                             }
                         }catch ( JSONException e ) {
-                            Log.e("JSONException", "Error parsing JSON", e);
+                            progess.setVisibility(View.GONE);
+                            Log.e("JSON", "Error parsing JSON", e);
                         }
+
+
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(EditarUsuarioActivity.this, "Opss!! Algo deu errado VolleyError", Toast.LENGTH_SHORT).show();
                         Log.e("VolleyError", "Error", error);
                     }
                 }){
@@ -144,4 +232,6 @@ public class EditarUsuarioActivity extends AppCompatActivity {
         super.onResume();
         getUserDetail();
     }
+
+
 }
