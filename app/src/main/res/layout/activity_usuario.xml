@@ -8,13 +8,14 @@
     tools:context=".Activies.UsuarioActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/passageiros"
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imgPerfilT"
         android:layout_width="360dp"
         android:layout_height="190dp"
         android:background="#007FFF"
         android:clickable="true"
-        android:onClick="passageiro"
+        android:focusable="true"
         android:src="@drawable/user"
         app:civ_border_color="#000"
         app:civ_border_width="2dp"
@@ -33,7 +34,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textNomeU2"
-        app:layout_constraintTop_toBottomOf="@+id/passageiros" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPerfilT" />
 
     <TextView
         android:id="@+id/textNomeU2"
@@ -44,7 +45,7 @@
         android:textColor="#000"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/passageiros" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPerfilT" />
 
     <TextView
         android:id="@+id/textEmailU2"
@@ -90,7 +91,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:text="CPF"
+        android:text="@string/cpf"
         android:textColor="@color/AzulTema"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
@@ -103,7 +104,7 @@
         android:layout_width="53dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Apelido:"
+        android:text="@string/apelido"
         android:textColor="#000"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -198,8 +199,9 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passageiros"
-        app:srcCompat="@drawable/user_perfil" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPerfilT"
+        app:srcCompat="@drawable/user_perfil"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -242,13 +244,13 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="26dp"
-        android:layout_height="21dp"
+        android:layout_width="22dp"
+        android:layout_height="17dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:srcCompat="@drawable/tell_perfil" />
@@ -270,7 +272,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <android.support.design.widget.FloatingActionButton
