@@ -2,11 +2,8 @@ package br.com.transescolar.Activies;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,27 +17,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.transescolar.API.APIUtils;
-import br.com.transescolar.API.ITios;
-import br.com.transescolar.Model.Tios;
 import br.com.transescolar.R;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CadastroActivity extends AppCompatActivity {
 
     EditText editNome, editCpf, editApelido, editPlaca, editTell, editSenha, editEmail, editLogin;
     Button btnCadastro;
     ProgressBar progressBar;
-    private static String URL_REGIST = "http://192.168.1.33/Teste1Php/register.php";
+    private static String URL_REGIST = "http://192.168.1.33/apiapptransescolar/register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

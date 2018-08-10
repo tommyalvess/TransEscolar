@@ -39,8 +39,8 @@ public class EditarUsuarioActivity extends AppCompatActivity {
     SessionManager sessionManager;
     String getId;
     ProgressBar progess;
-    private static String URL_READ = "http://192.168.1.33/Teste1Php/read_tios.php?apicall=findAll";
-    private static String URL_EDIT = "http://192.168.1.33/Teste1Php/edit_detail.php";
+    private static String URL_READ = "http://192.168.1.33/apiapptransescolar/read_tios.php?apicall=findAll";
+    private static String URL_EDIT = "http://192.168.1.33/apiapptransescolar/edit_detail.php";
 
 
     @Override

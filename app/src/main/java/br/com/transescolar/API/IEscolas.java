@@ -10,8 +10,8 @@ import retrofit2.http.Query;
 
 public interface IEscolas {
 
-    @GET("getEscolas.php")
-    Call<List<Escolas>> getEscolas (@Query("key") String keyword );
+    @GET("escolas")
+    Call< List<Escolas> > getEscolas ( @Query("key") String keyword );
 
 }
 

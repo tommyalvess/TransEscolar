@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editCpf, editSenha;
 
     ProgressBar loginProgress;
-    private static String URL_LOGIN = "http://192.168.1.33/Teste1Php/login6.php?apicall=login";
+    private static String URL_LOGIN = "http://192.168.1.33/apiapptransescolar/login6.php?apicall=login";
 
     SessionManager sessionManager;
 
@@ -160,28 +160,6 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public  boolean verificaConexao() {
-        boolean conectado;
-        ConnectivityManager conectivtyManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (conectivtyManager.getActiveNetworkInfo() != null
-                && conectivtyManager.getActiveNetworkInfo().isAvailable()
-                && conectivtyManager.getActiveNetworkInfo().isConnected()) {
-            conectado = true;
-        } else {
-            conectado = false;
-        }
-        return conectado;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (verificaConexao() == true){
-            loginProgress.setVisibility(View.GONE);
-            btnLogin.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "Conexão estabelecida!", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     public void Cadastro(View view) {
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);

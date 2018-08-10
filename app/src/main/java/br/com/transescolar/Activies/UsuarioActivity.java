@@ -45,8 +45,8 @@ public class UsuarioActivity extends AppCompatActivity {
     private static final String TAG = UsuarioActivity.class.getSimpleName();
     TextView textNomeU, textEmailU, textCpfU, textApelidoU, texPlacaU, textTellU;
     CircleImageView imgPerfilT;
-    private static String URL_READ = "http://192.168.1.33/Teste1Php/read_tios.php?apicall=findAll";
-    private static String URL_UPLOAD = "http://192.168.1.33/Teste1Php/upload.php";
+    private static String URL_READ = "http://192.168.1.33/apiapptransescolar/read_tios.php?apicall=findAll";
+    private static String URL_UPLOAD = "http://192.168.1.33/apiapptransescolar/upload.php";
     String getId;
     String getCpf;
     private Bitmap bitmap;
@@ -129,6 +129,7 @@ public class UsuarioActivity extends AppCompatActivity {
                                     String apelido = object.getString("apelido").trim();
                                     String placa = object.getString("placa").trim();
                                     String tell = object.getString("tell").trim();
+                                    String strImage = object.getString("img").trim();
 
                                     textNomeU.setText(nome);
                                     textEmailU.setText(email);
@@ -136,6 +137,7 @@ public class UsuarioActivity extends AppCompatActivity {
                                     textApelidoU.setText(apelido);
                                     texPlacaU.setText(placa);
                                     textTellU.setText(tell);
+                                    Picasso.get().load(strImage).into(imgPerfilT);
 
                                 }
                             }else {
@@ -220,8 +222,8 @@ public class UsuarioActivity extends AppCompatActivity {
         }
     }
 
+    //Fazer o Upload da foto
     private void UploadPicture(final String id, final String cpf, final String photo) {
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override

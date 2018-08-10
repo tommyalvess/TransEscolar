@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,12 +48,40 @@ public class EscolasActivity extends AppCompatActivity {
 
             progressBar = findViewById(R.id.progess);
             recyclerView = findViewById(R.id.escolaList);
-            layoutManager = new LinearLayoutManager(this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setHasFixedSize(true);
+            fetchSchool("");
 
         }
 
+        public void fetchSchool (String key){
+            iEscolas = ApiClient.getApiClient().create(IEscolas.class);
+            Call<List<Escolas>> call = iEscolas.getEscolas(key);
+
+            call.enqueue(new Callback<List<Escolas>>() {
+                @Override
+                public void onResponse(Call<List<Escolas>> call, Response<List<Escolas>> response) {
+                    progressBar.setVisibility(View.GONE);
+                    escolas = response.body();
+                    escolaAdapter = new EscolaAdapter(escolas, EscolasActivity.this);
+                    recyclerView.setAdapter(escolaAdapter);
+                    escolaAdapter.notifyDataSetChanged();
+                    Toast.makeText(EscolasActivity.this, "Olha o que achamos", Toast.LENGTH_SHORT).show();
+                }
+
+
+                @Override
+                public void onFailure(Call<List<Escolas>> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(EscolasActivity.this, "Opss! Tente novamente mais tarde!", Toast.LENGTH_SHORT).show();
+                    Log.e("Call", "carregar dados", t);
+
+                }
+            });
+
+        }
 
 
         @Override
@@ -82,5 +111,10 @@ public class EscolasActivity extends AppCompatActivity {
             return true;
 
         };
+
+    public void onResume() {
+        super.onResume();
+        recyclerView.setAdapter(escolaAdapter);
+    }
 
     }// fim da Activity

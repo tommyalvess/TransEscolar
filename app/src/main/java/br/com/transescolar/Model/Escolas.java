@@ -8,8 +8,6 @@ public class Escolas {
     @SerializedName("nome") private String nome;
     @SerializedName("endereco") private String endereco;
     @SerializedName("tell") private String tell;
-    @SerializedName("img") private int img;
-    @SerializedName("periodo") private String periodo;
 
     public int getId() {
         return id;
@@ -27,11 +25,5 @@ public class Escolas {
         return tell;
     }
 
-    public int getImg() {
-        return img;
-    }
 
-    public String getPeriodo() {
-        return periodo;
-    }
 }
