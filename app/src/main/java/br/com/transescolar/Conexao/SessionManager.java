@@ -24,12 +24,28 @@ public class SessionManager {
     public static final String APELIDO = "APELIDO";
     public static final String PLACA = "PLACA";
     public static final String TELL = "TELL";
+    public static final String IMG = "IMG";
     public static final String ID = "ID";
 
     public SessionManager(Context context) {
         this.context = context;
         sharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = sharedPreferences.edit();
+    }
+
+    public void createSession(String id, String nome, String email, String cpf, String apelido, String placa, String tell, String img){
+
+        editor.putBoolean(LOGIN, true);
+        editor.putString(NAME, nome);
+        editor.putString(EMAIL, email);
+        editor.putString(CPF, cpf);
+        editor.putString(APELIDO, apelido);
+        editor.putString(PLACA, placa);
+        editor.putString(TELL, tell);
+        editor.putString(IMG, img);
+        editor.putString(ID, id);
+        editor.apply();
+
     }
 
     public void createSession(String id, String nome, String email, String cpf, String apelido, String placa, String tell){
@@ -69,6 +85,7 @@ public class SessionManager {
         user.put(APELIDO, sharedPreferences.getString(APELIDO, null));
         user.put(PLACA, sharedPreferences.getString(PLACA, null));
         user.put(TELL, sharedPreferences.getString(TELL, null));
+        user.put(IMG, sharedPreferences.getString(IMG, null));
         user.put(ID, sharedPreferences.getString(ID, null));
 
         return user;

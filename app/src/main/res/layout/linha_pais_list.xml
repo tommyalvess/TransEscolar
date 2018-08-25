@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="9dp"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imgPai"
+            android:layout_width="140dp"
+            android:layout_height="90dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/user"
+            app:civ_border_color="#000"
+            app:civ_border_width="2dp" />
+
+
+        <AbsoluteLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nomeP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/deletarKids"
+                android:layout_x="141dp"
+                android:layout_y="5dp"
+                android:text="Nome:"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="171dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <TextView
+                android:id="@+id/tellP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/nomeText"
+                android:layout_x="141dp"
+                android:layout_y="29dp"
+                android:text="Telefone:"
+                android:autoLink="phone"
+                android:textSize="@dimen/fab_margin"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="171dp"
+                tools:layout_editor_absoluteY="90dp" />
+
+            <TextView
+                android:id="@+id/emilP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/addKids"
+                android:layout_alignStart="@+id/nomeText"
+                android:layout_x="140dp"
+                android:layout_y="59dp"
+                android:text="Email:"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="171dp"
+                tools:layout_editor_absoluteY="50dp" />
+
+        </AbsoluteLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

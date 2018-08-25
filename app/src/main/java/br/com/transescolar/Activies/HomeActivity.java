@@ -14,6 +14,7 @@ import java.util.HashMap;
 import br.com.transescolar.Conexao.SessionManager;
 import br.com.transescolar.Conexao.SharedPrefManager;
 import br.com.transescolar.R;
+import br.com.transescolar.Teste.TesteEscola;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("IntinerarioActivity","intinerario");
-                Intent intent = new Intent(HomeActivity.this, IntinerarioActivity.class);
+                Intent intent = new Intent(HomeActivity.this, TesteActivity.class);
                 startActivity(intent);
             }
         }); // Fim do imgIntinerario

@@ -7,11 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".Activies.TesteActivity">
 
+    <TextView
+        android:id="@+id/textAviso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="Voce não tem passageiros!"
+        android:textStyle="italic|bold"
+        android:textAlignment="center"
+        android:textSize="25dp"/>
+
     <ListView
+        android:id="@+id/lstTeste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lstTeste"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

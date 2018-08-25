@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editCpf, editSenha;
 
     ProgressBar loginProgress;
-    private static String URL_LOGIN = "http://192.168.1.33/apiapptransescolar/login6.php?apicall=login";
+    private static String URL_LOGIN = "http://apsconsigpromotora.com.br/apiapptransescolar/login6.php?apicall=login";
 
     SessionManager sessionManager;
 
@@ -93,9 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                               JSONObject json = new JSONObject(response);
                               JSONArray nameArray = json.names();
                               JSONArray valArray = json.toJSONArray( nameArray );
+                              String success = json.getString("error");
 
 
-                            if (!json.optBoolean("1")){
+                            if (success.equals("1")){
 
                               for ( int i = 0; i < valArray.length(); i++) {
                                   JSONObject object = valArray.getJSONObject(i);
@@ -106,8 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                                   String apelido = object.getString("apelido").trim();
                                   String placa = object.getString("placa").trim();
                                   String tell = object.getString("tell").trim();
+                                  String img = object.getString("img").trim();
 
-                                  sessionManager.createSession(id, nome, email, cpf, apelido, placa, tell);
+                                  sessionManager.createSession(id, nome, email, cpf, apelido, placa, tell, img);
 
                                   Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                   intent.putExtra("idTios", id);
@@ -117,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                                   intent.putExtra("apelido", apelido);
                                   intent.putExtra("placa", placa);
                                   intent.putExtra("tell", tell);
+                                  intent.putExtra("img", tell);
                                   startActivity(intent);
 
                                   loginProgress.setVisibility(View.GONE);
@@ -124,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                                   finish();
 
                               }
-                          }else {
+                          }else if(success.equals("0")) {
                                 Toast.makeText(LoginActivity.this,json.getString("message"),Toast.LENGTH_LONG).show();
                                 loginProgress.setVisibility(View.GONE);
                                 btnLogin.setVisibility(View.VISIBLE);
@@ -142,8 +145,9 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loginProgress.setVisibility(View.GONE);
+                        btnLogin.setVisibility(View.VISIBLE);
                         Toast.makeText(LoginActivity.this, "Opss!! Sem Conexão a internet", Toast.LENGTH_SHORT).show();
-
                         Log.e(TAG, "response: " + error);
                     }
                 }){
@@ -162,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void Cadastro(View view) {
-        Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+        Intent intent = new Intent(LoginActivity.this, Cadastro2Activity.class);
         startActivity(intent);
     }
 }

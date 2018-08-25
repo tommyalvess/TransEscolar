@@ -8,6 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -39,8 +42,8 @@ public class EditarUsuarioActivity extends AppCompatActivity {
     SessionManager sessionManager;
     String getId;
     ProgressBar progess;
-    private static String URL_READ = "http://192.168.1.33/apiapptransescolar/read_tios.php?apicall=findAll";
-    private static String URL_EDIT = "http://192.168.1.33/apiapptransescolar/edit_detail.php";
+    private static String URL_READ = "http://apsconsigpromotora.com.br/apiapptransescolar/read_tios.php?apicall=findAll";
+    private static String URL_EDIT = "http://apsconsigpromotora.com.br/apiapptransescolar/edit_detail.php";
 
 
     @Override
@@ -63,6 +66,57 @@ public class EditarUsuarioActivity extends AppCompatActivity {
         editApelidoU =  findViewById(R.id.editarApelido2);
         editPlacaU =  findViewById(R.id.editarPlaca);
         editTellU =  findViewById(R.id.editarTellT);
+        editTellU.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                String text = editTellU.getText().toString();
+                int  textLength = editTellU.getText().length();
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
+                    return;
+                if (textLength == 1) {
+                    if (!text.contains("("))
+                    {
+                        editTellU.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
+                        editTellU.setSelection(editTellU.getText().length());
+                    }
+                }
+                else if (textLength == 4)
+                {
+                    if (!text.contains(")"))
+                    {
+                        editTellU.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
+                        editTellU.setSelection(editTellU.getText().length());
+                    }
+                }
+                else if (textLength == 5)
+                {
+                    editTellU.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
+                    editTellU.setSelection(editTellU.getText().length());
+                }
+                else if (textLength == 11)
+                {
+                    if (!text.contains("-"))
+                    {
+                        editTellU.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
+                        editTellU.setSelection(editTellU.getText().length());
+                    }
+                }
+
+
+            }
+        });
         progess = findViewById(R.id.progess);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -100,7 +154,7 @@ public class EditarUsuarioActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             //boolean success = jsonObject.getBoolean("success");
-                            String success = jsonObject.getString("error");
+                            String success = jsonObject.getString("success");
 
                             if (success.equals("1")){
                                 sessionManager.createSession(id, nome, email, cpf, apelido, placa, tell);

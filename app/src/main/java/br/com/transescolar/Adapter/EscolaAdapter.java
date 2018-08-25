@@ -39,7 +39,7 @@ public class EscolaAdapter extends RecyclerView.Adapter<EscolaAdapter.MyViewHold
         holder.nome.setText(escola.get(position).getNome());
         holder.endereco.setText(escola.get(position).getEndereco());
         holder.tell.setText(escola.get(position).getTell());
-        //holder.imgEscolaL.setImageResource(escola.get(position).getImg());
+        //holder.imgEscolaL.setImageResource(escola.get(position).);
     }
 
     @Override

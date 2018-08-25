@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +56,58 @@ public class CadastroActivity extends AppCompatActivity {
         editApelido = findViewById(R.id.editApelido2);
         editPlaca = findViewById(R.id.editPlaca);
         editTell = findViewById(R.id.editTellT);
+        editTell.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                String text = editTell.getText().toString();
+                int  textLength = editTell.getText().length();
+                if (text.endsWith("-") || text.endsWith(" ") || text.endsWith(" "))
+                    return;
+                if (textLength == 1) {
+                    if (!text.contains("("))
+                    {
+                        editTell.setText(new StringBuilder(text).insert(text.length() - 1, "(").toString());
+                        editTell.setSelection(editTell.getText().length());
+                    }
+                }
+                else if (textLength == 4)
+                {
+                    if (!text.contains(")"))
+                    {
+                        editTell.setText(new StringBuilder(text).insert(text.length() - 1, ")").toString());
+                        editTell.setSelection(editTell.getText().length());
+                    }
+                }
+                else if (textLength == 5)
+                {
+                    editTell.setText(new StringBuilder(text).insert(text.length() - 1, " ").toString());
+                    editTell.setSelection(editTell.getText().length());
+                }
+                else if (textLength == 11)
+                {
+                    if (!text.contains("-"))
+                    {
+                        editTell.setText(new StringBuilder(text).insert(text.length() - 1, "-").toString());
+                        editTell.setSelection(editTell.getText().length());
+                    }
+                }
+
+
+            }
+        });
         editEmail = findViewById(R.id.editEmailT);
         btnCadastro = findViewById(R.id.btnSaveCadastro);
 
@@ -65,6 +122,17 @@ public class CadastroActivity extends AppCompatActivity {
                 String tell = editTell.getText().toString().trim();
                 String email = editEmail.getText().toString().trim();
 
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    editEmail.setError("Entre com um email valido!");
+                    editSenha.requestFocus();
+                    return;
+                }
+                if (senha.length() < 6){
+                    editSenha.setError("Senha deve ter no minimo 6 caracteres");
+                    editSenha.requestFocus();
+                    return;
+                }
+
                 if (!nome.isEmpty() || !email.isEmpty()|| !cpf.isEmpty() || !apelido.isEmpty() || !placa.isEmpty() || !tell.isEmpty() || !senha.isEmpty()){
                     Regist();
                     progressBar.setVisibility(View.VISIBLE);
@@ -77,8 +145,10 @@ public class CadastroActivity extends AppCompatActivity {
                     editTell.setError("Insera seu Telefone!");
                     editSenha.setError("Insera sua senha!");
                     editEmail.setError("Insera seu Email!");
+                    editSenha.requestFocus();
                     progressBar.setVisibility(View.GONE);
                     btnCadastro.setVisibility(View.VISIBLE);
+                    return;
                 }
             }
         });
@@ -108,14 +178,15 @@ public class CadastroActivity extends AppCompatActivity {
                                 Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }else {
-                                Toast.makeText(CadastroActivity.this, "Peencha os campos em braco!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CadastroActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 btnCadastro.setVisibility(View.VISIBLE);
                             }
 
                         } catch (JSONException e1) {
                             e1.printStackTrace();
-                            Toast.makeText(CadastroActivity.this, "Houve um erro no cadastro!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CadastroActivity.this, "CPF já cadastrodo!", Toast.LENGTH_SHORT).show();
+                            Log.e("JSON", "Error parsing JSON", e1);
                             progressBar.setVisibility(View.GONE);
                             btnCadastro.setVisibility(View.VISIBLE);
                         }
@@ -124,7 +195,7 @@ public class CadastroActivity extends AppCompatActivity {
                 new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CadastroActivity.this, "Resgistro teve um Erro:", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroActivity.this, "Erro ao resgistrar o usuario!", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                         btnCadastro.setVisibility(View.VISIBLE);
                     }

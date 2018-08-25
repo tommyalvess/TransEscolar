@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.transescolar.Activies.Cadastro2Activity">
+    tools:context="br.com.transescolar.Activies.CadastroActivity">
 
     <EditText
         android:id="@+id/editNomeT"
@@ -49,6 +50,7 @@
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="Placa:"
+        android:maxLength="7"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -65,7 +67,8 @@
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="CPF:"
-        android:inputType="textPersonName"
+        android:maxLength="11"
+        android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/editEmailT"
@@ -81,7 +84,10 @@
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="Telefone:"
-        android:inputType="textPersonName"
+        android:inputType="phone|number"
+        android:digits="0123456789+"
+        android:lines="1"
+        android:maxLength="15"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/editPlaca"
@@ -115,7 +121,7 @@
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="Senha:"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/progressBarCadastro"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.472"

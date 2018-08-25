@@ -1,7 +1,9 @@
 package br.com.transescolar.Activies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -45,8 +47,8 @@ public class UsuarioActivity extends AppCompatActivity {
     private static final String TAG = UsuarioActivity.class.getSimpleName();
     TextView textNomeU, textEmailU, textCpfU, textApelidoU, texPlacaU, textTellU;
     CircleImageView imgPerfilT;
-    private static String URL_READ = "http://192.168.1.33/apiapptransescolar/read_tios.php?apicall=findAll";
-    private static String URL_UPLOAD = "http://192.168.1.33/apiapptransescolar/upload.php";
+    private static String URL_READ = "http://apsconsigpromotora.com.br/apiapptransescolar/read_tios.php?apicall=findAll";
+    private static String URL_UPLOAD = "http://apsconsigpromotora.com.br/apiapptransescolar/upload.php";
     String getId;
     String getCpf;
     private Bitmap bitmap;
@@ -75,15 +77,8 @@ public class UsuarioActivity extends AppCompatActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
-        String nNome = user.get(sessionManager.NAME);
-        String nEmail = user.get(sessionManager.EMAIL);
         getCpf = user.get(sessionManager.CPF);
-        String nApelido = user.get(sessionManager.APELIDO);
-        String nPlaca = user.get(sessionManager.PLACA);
-        String nTell = user.get(sessionManager.TELL);
 
-
-        getSupportActionBar().setTitle(nApelido);     //Titulo para ser exibido na sua Action Bar em frente à seta
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +103,28 @@ public class UsuarioActivity extends AppCompatActivity {
         });
     }
 
+
+    //Pegar inf da sessão
+    private void getUserDetailSessão(){
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        String nNome = user.get(sessionManager.NAME);
+        String nEmail = user.get(sessionManager.EMAIL);
+        String nCpf = user.get(sessionManager.CPF);
+        String nApelido = user.get(sessionManager.APELIDO);
+        String nPlaca = user.get(sessionManager.PLACA);
+        String nTell = user.get(sessionManager.TELL);
+        String nIMG = user.get(sessionManager.IMG);
+
+        textNomeU.setText(nNome);
+        textEmailU.setText(nEmail);
+        textCpfU.setText(nCpf);
+        textApelidoU.setText(nApelido);
+        texPlacaU.setText(nPlaca);
+        textTellU.setText(nTell);
+        textTellU.setText(nIMG);
+
+    }
+
     //Pegar as infs do user
     private void getUserDetail(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
@@ -119,7 +136,7 @@ public class UsuarioActivity extends AppCompatActivity {
                             JSONObject json = new JSONObject(response);
                             JSONArray nameArray = json.names();
                             JSONArray valArray = json.toJSONArray( nameArray );
-                            if (!json.optBoolean("1")){
+                            if (!json.optBoolean("0")){
                                 for (int i = 0; i < valArray.length(); i++) {
                                     JSONObject object = valArray.getJSONObject(i);
                                     String id = object.getString("idTios").trim();
@@ -138,6 +155,7 @@ public class UsuarioActivity extends AppCompatActivity {
                                     texPlacaU.setText(placa);
                                     textTellU.setText(tell);
                                     Picasso.get().load(strImage).into(imgPerfilT);
+                                    getSupportActionBar().setTitle(apelido);
 
                                 }
                             }else {
@@ -185,15 +203,33 @@ public class UsuarioActivity extends AppCompatActivity {
     };
 
     public void editar(MenuItem item) {
-        Log.d("EditActivity","MapActivity");
+        Log.d("EditActivity","Activity");
         Intent intent = new Intent(UsuarioActivity.this, EditarUsuarioActivity.class);
         startActivity(intent);
+    }
+
+    public  boolean verificaConexao() {
+        boolean conectado;
+        ConnectivityManager conectivtyManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+            conectado = true;
+        } else {
+            conectado = false;
+        }
+        return conectado;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getUserDetail();
+        if (verificaConexao() == true){
+            getUserDetail();
+        }else {
+            getUserDetailSessão();
+        }
+
     }
 
     //Fazer upload da foto

@@ -1,12 +1,11 @@
 package br.com.transescolar.Activies;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,18 +13,18 @@ import android.widget.ProgressBar;
 import android.view.View;
 import android.widget.Toast;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
-import br.com.transescolar.Conexao.RequestHandler;
-import br.com.transescolar.Conexao.SharedPrefManager;
-import br.com.transescolar.Conexao.URLs;
-import br.com.transescolar.Model.Tios;
+import br.com.transescolar.API.ApiClient;
 import br.com.transescolar.R;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Cadastro2Activity extends AppCompatActivity {
 
@@ -70,134 +69,100 @@ public class Cadastro2Activity extends AppCompatActivity {
         final String senha = editSenha.getText().toString().trim();
         final String email = editEmail.getText().toString().trim();
 
-        //first we will do the validations
-
-        if (TextUtils.isEmpty(nome)) {
-            editNome.setError("Peencher o campo de Nome!");
+        if (nome.isEmpty()){
+            editNome.setError("Insira o seu nome");
             editNome.requestFocus();
             return;
         }
-
-        if (TextUtils.isEmpty(cpf)) {
-            editCpf.setError("Peencher o campo de Email!");
+        if (cpf.isEmpty()){
+            editCpf.setError("Insira o seu CPF");
             editCpf.requestFocus();
             return;
         }
 
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editEmail.setError("Entre com um email valido");
-            editEmail.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(apelido)) {
-            editApelido.setError("Peencher o campo de Apelido!");
+        if (apelido.isEmpty()){
+            editApelido.setError("Insira o seu Apelido");
             editApelido.requestFocus();
             return;
         }
 
-        if (TextUtils.isEmpty(placa)) {
-            editPlaca.setError("Peencher o campo de Placa!");
+        if (placa.isEmpty()){
+            editPlaca.setError("Insira a placa");
             editPlaca.requestFocus();
             return;
         }
 
-        if (TextUtils.isEmpty(tell)) {
-            editTell.setError("Peencher o campo de Tellefone!");
+        if (tell.isEmpty()){
+            editTell.setError("Insira o telefone");
             editTell.requestFocus();
             return;
         }
+        if (email.isEmpty()){
+            editEmail.setError("Insira um email!");
+            editEmail.requestFocus();
+            return;
+        }
+//        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+//            editEmail.setError("Email invalido!");
+//            editEmail.requestFocus();
+//            return;
+//        }
 
-        if (TextUtils.isEmpty(senha)) {
-            editSenha.setError("Peencher o campo de Senha!");
+        if (senha.isEmpty()){
+            editSenha.setError("Insira sua senha!");
             editSenha.requestFocus();
             return;
         }
 
-//        if ((isValidPassword(senha))) {
-//            editPlaca.setError("Entre com uma senha valida!");
-//            editPlaca.requestFocus();
-//            return;
-//        }
-
-        //if it passes all the validations
-
-        class RegisterUser extends AsyncTask<Void, Void, String> {
-
-            private ProgressBar progressBar;
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                //creating request handler object
-                RequestHandler requestHandler = new RequestHandler();
-
-                //creating request parameters
-                HashMap<String, String> params = new HashMap<>();
-                params.put("nome", nome);
-                params.put("email", email);
-                params.put("cpf", cpf);
-                params.put("apelido", apelido);
-                params.put("placa", placa);
-                params.put("tell", tell);
-                params.put("senha", senha);
-
-                //returing the response
-                return requestHandler.sendPostRequest(URLs.URL_REGISTER, params);
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                //displaying the progress bar while user registers on the server
-                progressBar = (ProgressBar) findViewById(R.id.progressBarCadastro);
-                progressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                //hiding the progressbar after completion
-                progressBar.setVisibility(View.GONE);
-
-                try {
-                    //converting response to json object
-                    JSONObject obj = new JSONObject(s);
-
-                    //if no error in response
-                    if (!obj.getBoolean("error")) {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        //getting the user from the response
-                        JSONObject userJson = obj.getJSONObject("user");
-
-                        //creating a new user object
-                        Tios user = new Tios(
-                                userJson.getInt("id"),
-                                userJson.getString("nome"),
-                                userJson.getString("email"),
-                                userJson.getString("cpf"),
-                                userJson.getString("apelido"),
-                                userJson.getString("placa"),
-                                userJson.getString("tell"),
-                                userJson.getString("senha")
-                        );
-
-
-                        //starting the profile activity
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+        if (senha.length() < 6){
+            editSenha.setError("Senha deve ter 6 caracteres!");
+            editSenha.requestFocus();
+            return;
         }
 
-        //executing the async task
-        RegisterUser ru = new RegisterUser();
-        ru.execute();
+        Call<ResponseBody> call = ApiClient
+                .getInstance()
+                .getApi()
+                .createuser(nome, email, cpf, apelido, placa, tell, senha);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                String s = null;
+
+                try {
+                    if (response.code() == 201) {
+
+                        s = response.body().string();
+                        Toast.makeText(Cadastro2Activity.this, s, Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        s = response.errorBody().string();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (s != null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        Toast.makeText(Cadastro2Activity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(Cadastro2Activity.this, "Opss!! Sem Conexão a internet", Toast.LENGTH_SHORT).show();
+                Log.e("Call", "Error", t);
+            }
+        });
+
     }// final registerUser()
 
     public static boolean isValidPassword(String s) {

@@ -12,26 +12,21 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IPais {
 
-    @POST("/api/pais/add")
-    Call<Void> inseriPai(@Body Pais pais);
-
-    @GET("/api/pais")
+    @GET("pais")
     Call<List<Pais>> getPais();
 
-    @GET("/api/pais/{id}")
-    Call<Pais> getPaisPorId(@Path("id") String id);
+    @GET("pais/[{id}]")
+    Call<List<Pais>> getPaisPorId(@Query("id") int idTios);
 
-    @PUT("/api/pais/update/{id}")
-    Call<Void> alteraPai(@Path("id") String id, @Body Pais pais);
+    @GET("pais/search/[{query}]")
+    Call<List<Pais>> getPaisId(@Path("query") int idTios);
 
-    @DELETE("/api/pais/delete/{id}")
-    Call<Void> removePai(@Path("id") String id);
-
-    public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+   Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://192.168.1.33/ApiRestFull/public/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

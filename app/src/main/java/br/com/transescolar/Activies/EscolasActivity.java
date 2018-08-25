@@ -1,13 +1,18 @@
 package br.com.transescolar.Activies;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +41,6 @@ public class EscolasActivity extends AppCompatActivity {
         private IEscolas iEscolas;
         ProgressBar progressBar;
 
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -48,8 +52,9 @@ public class EscolasActivity extends AppCompatActivity {
 
             progressBar = findViewById(R.id.progess);
             recyclerView = findViewById(R.id.escolaList);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            //layoutManager = new LinearLayoutManager(this);
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
+            //layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setHasFixedSize(true);
             fetchSchool("");
@@ -57,7 +62,7 @@ public class EscolasActivity extends AppCompatActivity {
         }
 
         public void fetchSchool (String key){
-            iEscolas = ApiClient.getApiClient().create(IEscolas.class);
+            IEscolas iEscolas = IEscolas.retrofit.create(IEscolas.class);
             Call<List<Escolas>> call = iEscolas.getEscolas(key);
 
             call.enqueue(new Callback<List<Escolas>>() {
@@ -68,7 +73,6 @@ public class EscolasActivity extends AppCompatActivity {
                     escolaAdapter = new EscolaAdapter(escolas, EscolasActivity.this);
                     recyclerView.setAdapter(escolaAdapter);
                     escolaAdapter.notifyDataSetChanged();
-                    Toast.makeText(EscolasActivity.this, "Olha o que achamos", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -82,7 +86,6 @@ public class EscolasActivity extends AppCompatActivity {
             });
 
         }
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -105,12 +108,35 @@ public class EscolasActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
 
-        public boolean onCreateOptionsMenu(android.view.Menu menu) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_escola, menu);
-            return true;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_escola, menu);
 
-        };
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName())
+        );
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                fetchSchool(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                fetchSchool(newText);
+                return false;
+            }
+        });
+
+        return true;
+    }
 
     public void onResume() {
         super.onResume();

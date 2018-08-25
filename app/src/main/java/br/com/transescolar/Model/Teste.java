@@ -1,41 +1,80 @@
 package br.com.transescolar.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Teste {
 
-    private int id;
-    private int userId;
-    private String title;
-    private String body;
+    @SerializedName("viii") private String vii;
+    @SerializedName("id") private int idT;
+    @SerializedName("userId") private int userIdT;
+    @SerializedName("title") private String titleT;
+    @SerializedName("body") private String bodyT;
+    @SerializedName("corpo") private String corpoT;
+    @SerializedName("cadeira") private String cadeira;
 
-    public int getId() {
-        return id;
+    public Teste(String vii, int idT, int userIdT, String titleT, String bodyT, String corpoT, String cadeira) {
+        this.vii = vii;
+        this.idT = idT;
+        this.userIdT = userIdT;
+        this.titleT = titleT;
+        this.bodyT = bodyT;
+        this.corpoT = corpoT;
+        this.cadeira = cadeira;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getVii() {
+        return vii;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setVii(String vii) {
+        this.vii = vii;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getIdT() {
+        return idT;
     }
 
-    public String getTitle() {
-        return title;
+    public void setIdT(int idT) {
+        this.idT = idT;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getUserIdT() {
+        return userIdT;
     }
 
-    public String getBody() {
-        return body;
+    public void setUserIdT(int userIdT) {
+        this.userIdT = userIdT;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public String getTitleT() {
+        return titleT;
+    }
+
+    public void setTitleT(String titleT) {
+        this.titleT = titleT;
+    }
+
+    public String getBodyT() {
+        return bodyT;
+    }
+
+    public void setBodyT(String bodyT) {
+        this.bodyT = bodyT;
+    }
+
+    public String getCorpoT() {
+        return corpoT;
+    }
+
+    public void setCorpoT(String corpoT) {
+        this.corpoT = corpoT;
+    }
+
+    public String getCadeira() {
+        return cadeira;
+    }
+
+    public void setCadeira(String cadeira) {
+        this.cadeira = cadeira;
     }
 }
