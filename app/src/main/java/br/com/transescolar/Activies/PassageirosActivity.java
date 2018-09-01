@@ -91,29 +91,29 @@ public class PassageirosActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            // Respond to the action bar's Up/Home button
-//            case android.R.id.home:
-//                NavUtils.navigateUpFromSameTask(this);
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main, menu);
-//
-//        return true;
-//
-//    };
-//
-//    public void addPass(MenuItem item) {
-//        Intent intent = new Intent(PassageirosActivity.this, AddPassActivity.class);
-//        startActivity(intent);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        return true;
+
+    };
+
+    public void addPass(MenuItem item) {
+        Intent intent = new Intent(PassageirosActivity.this, AddPassActivity.class);
+        startActivity(intent);
+    }
 
 
 

@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MapActivity","MapActivity");
-                Intent intent = new Intent(HomeActivity.this, MapsExActivity.class);
+                Intent intent = new Intent(HomeActivity.this, DriverMapsActivity.class);
                 startActivity(intent);
             }
         }); // FIm do imgMap

@@ -4,14 +4,21 @@
     package="br.com.transescolar">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
 
     <application
         android:allowBackup="true"
@@ -68,8 +75,7 @@
             android:name=".Activies.AddPaisActivity"
             android:label="Add Pais" />
         <activity
-            android:name=".Activies.MapActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Activies.MapActivity"/>
         <activity
             android:name=".Activies.IntinerarioActivity"
             android:label="Intinerario"
@@ -89,7 +95,7 @@
         </activity>
         <activity
             android:name=".Activies.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activies.CadastroActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -103,9 +109,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".Activies.MapsExActivity"
-            android:label="@string/title_activity_maps_ex" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity android:name=".Activies.InfKidsActivity" />
         <activity android:name=".Activies.TesteActivity" />
         <activity android:name=".Activies.Cadastro2Activity" />
@@ -113,7 +120,13 @@
             android:name=".Activies.EditarUsuarioActivity"
             android:label="@string/title_activity_editar_usuario"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Teste.TesteEscola"></activity>
+        <activity android:name=".Teste.TesteEscola" />
+        <activity
+            android:name=".Activies.DriverMapsActivity"
+            android:label="@string/title_activity_driver_maps"
+            android:theme="@android:style/ThemeOverlay.Material"
+            tools:targetApi="lollipop"
+            tools:ignore="NewApi"></activity>
     </application>
 
 </manifest>
