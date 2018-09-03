@@ -1,13 +1,16 @@
 package br.com.transescolar.Activies;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +24,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -48,16 +53,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import br.com.transescolar.Conexao.SessionManager;
 import br.com.transescolar.R;
 
-public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
     FusedLocationProviderClient mFusedLocationClient;
@@ -71,55 +74,108 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
     private DatabaseReference databaseR;
 
-    private LocationCallback mLocationCallback;
+    private String customerId = "";
+
+    private SupportMapFragment mapFragment;
+
+    Boolean isLogginOut = false;
+
+    LocationManager locationManager;
+
+    private LocationListener mLocationListener;
+
+    private Switch mWorkingSwitch;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
         setContentView(R.layout.activity_driver_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
 
+
+        //Criando o tollbar para custumizar
         getActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getActionBar().setTitle("Mapa");
 
         sessionManager = new SessionManager(this);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(sessionManager.ID);
+        getCpf = user.get(sessionManager.CPF);
 
-        mLogout = findViewById(R.id.logout);
-        mLogout.setOnClickListener(new View.OnClickListener() {
+        //myPermissionLocation();
+        //checkLocationPermission();
+        //myAlertDialog();
+
+
+        mWorkingSwitch = (Switch) findViewById(R.id.workingSwitch);
+        mWorkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DriverMapsActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-                return;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    connectDriver();
+                }else{
+                    disconectarDriver();
+                }
             }
         });
 
-        mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                for (Location location : locationResult.getLocations()) {
-                    Log.i("DriverMaps", "Location: " + location.getLatitude() + " " + location.getLongitude());
-                }
+    } //Oncreate
+
+    private void myPermissionLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        new AlertDialog.Builder(this)
+                                .setTitle("De permissão para localização!")
+                                .setMessage("Para funcionmento precisa ter permição")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ActivityCompat.requestPermissions(DriverMapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                                    }
+                                })
+                                .create()
+                                .show();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
             }
+        }
+    }
 
-        };
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    myAlertDialog();
+            } else {
+                ActivityCompat.requestPermissions(DriverMapsActivity.this,
+                        new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
+    }
 
-        //teste
+    private void myAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Localização");
+        builder.setMessage("Para funcionmento precisa ter permição")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ActivityCompat.requestPermissions(DriverMapsActivity.this,
+                                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
     }
 
@@ -140,17 +196,38 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
                         getCpf = user.get(sessionManager.CPF);
 
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference ref = database.getReference("driversAvailable");
-                        GeoFire geoFire = new GeoFire(ref);
+                        DatabaseReference refAvailable = database.getReference("driversAvailable");
+                        DatabaseReference refWorking = database.getReference("driversWorking");
+                        GeoFire geoFireAvailable = new GeoFire(refAvailable);
+                        GeoFire geoFireWorking = new GeoFire(refWorking);
 
-                        geoFire.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
-                            @Override
-                            public void onComplete(String key, DatabaseError error) {
-                                if (error != null) {
-                                    Log.d("Sucesso", "onComplete: ");
-                                }
-                            }
-                        });
+                        switch (customerId) {
+                            case "":
+                                //geoFireWorking.removeLocation(getId);
+                                geoFireAvailable.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                                    @Override
+                                    public void onComplete(String key, DatabaseError error) {
+                                        if (error != null) {
+                                            Log.d("Sucesso", "onComplete: ");
+                                        }
+                                    }
+                                });
+                                Log.d("Case", "Vazio");
+                                break;
+
+                            default:
+                                //geoFireAvailable.removeLocation(getId);
+                                geoFireWorking.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                                    @Override
+                                    public void onComplete(String key, DatabaseError error) {
+                                        if (error != null) {
+                                            Log.d("Sucesso", "onComplete: ");
+                                        }
+                                    }
+                                });
+                                Log.d("Case", "Trabalhando");
+                                break;
+                        }
 
                     }
 
@@ -161,84 +238,90 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
         };
 
-    }
+    } // myLocationCallback
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                checkLocationPermission();
+            }
+
         }
-        buildGoogleApiClient();
-        mMap.setMyLocationEnabled(true);
+
 
     }// onMapReady
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
+    LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            for (Location location : locationResult.getLocations()) {
+                if (getApplicationContext() != null) {
+                    mLastLocation = location;
 
-    @Override
-    public void onLocationChanged(Location location) {
-        mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                for (Location location : locationResult.getLocations()) {
-                    if (getApplicationContext() != null) {
-                        mLastLocation = location;
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom - 0.5f));
 
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom - 0.5f));
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference refAvailable = database.getReference("driversAvailable");
+                    DatabaseReference refWorking = database.getReference("driversWorking");
+                    GeoFire geoFireAvailable = new GeoFire(refAvailable);
+                    GeoFire geoFireWorking = new GeoFire(refWorking);
 
-                        HashMap<String, String> user = sessionManager.getUserDetail();
-                        getId = user.get(sessionManager.ID);
-                        getCpf = user.get(sessionManager.CPF);
 
-                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference ref = database.getReference("driversAvailable");
-                        GeoFire geoFire = new GeoFire(ref);
-
-                        geoFire.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
-                            @Override
-                            public void onComplete(String key, DatabaseError error) {
-                                if (error != null) {
-                                    Log.d("Sucesso", "onComplete: ");
-                                }
+                    geoFireAvailable.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+                            if (error != null) {
+                                Log.d("Sucesso", "onComplete: ");
                             }
-                        });
+                        }
+                    });
 
                     }
 
-                    Log.i("DriverMaps", "Location: " + location.getLatitude() + " " + location.getLongitude());
-                }
-
             }
+            Log.d("Call", "onLocationResult");
 
-        };
-    }
+        }
+
+    };
 
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        requestLocationUpdates();
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(5 * 1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mMap.setMyLocationEnabled(true);
+                    }
+                    mapFragment.getMapAsync(this);
+                } else {
+                    Toast.makeText(this, "Precisa permitir o acesso a localização!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
         }
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-        Log.d("LocationClient","On Connected");
+        Log.d("Call", "onRequestPermissionsResult");
+
     }
+
 
     private void startLocationUpdates() {
         if (ContextCompat.checkSelfPermission(this,
@@ -247,15 +330,16 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         }
         Log.d("Chamada", "Location update started ..............: ");
-        myLocationCallback();
+        requestLocationUpdates();
     }
 
     public void requestLocationUpdates() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(120000); // two minute interval
-        mLocationRequest.setFastestInterval(120000);
+        mLocationRequest.setInterval(50000);
+        mLocationRequest.setFastestInterval(10000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        myLocationCallback();
+        //myLocationCallback();
+        Log.d("Call", "requestLocationUpdates");
     }
 
     protected void stopLocationUpdates() {
@@ -265,53 +349,47 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
         Log.d("Chamada", "Location update stopped .......................");
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {
-
+    private void connectDriver(){
+        checkLocationPermission();
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+        mMap.setMyLocationEnabled(true);
+        Log.d("Call", "connectDriver");
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    private void disconectarDriver() {
+        if (mFusedLocationClient != null){
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        }
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
 
+        GeoFire geoFire = new GeoFire(ref);
+        geoFire.removeLocation(getId, new GeoFire.CompletionListener() {
+            @Override
+            public void onComplete(String key, DatabaseError error) {
+                Log.d("Call", "disconectarDriver");
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.d("Chamada", "onStart fired ..............");
-        mGoogleApiClient.connect();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mGoogleApiClient != null && mFusedLocationClient != null) {
+        if (mFusedLocationClient != null) {
             requestLocationUpdates();
-        } else {
-            buildGoogleApiClient();
         }
         Log.d("Chamada", "Location update resumed .....................");
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("Chamada", "onStop fired ..............");
-        mGoogleApiClient.disconnect();
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mFusedLocationClient != null) {
-            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-        }
+        requestLocationUpdates();
     }
 
     @Override

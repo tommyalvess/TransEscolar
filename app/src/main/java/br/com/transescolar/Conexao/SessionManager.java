@@ -27,6 +27,14 @@ public class SessionManager {
     public static final String IMG = "IMG";
     public static final String ID = "ID";
 
+    public static final String DATE = "dt_nas";
+    public static final String ENDERECO = "end_principal";
+    public static final String PERIODO = "periodo";
+    public static final String IDT = "idTios";
+    public static final String IDE = "idEscola";
+    public static final String IDP = "idPais";
+
+
     public SessionManager(Context context) {
         this.context = context;
         sharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -49,7 +57,6 @@ public class SessionManager {
     }
 
     public void createSession(String id, String nome, String email, String cpf, String apelido, String placa, String tell){
-
         editor.putBoolean(LOGIN, true);
         editor.putString(NAME, nome);
         editor.putString(EMAIL, email);
@@ -61,6 +68,31 @@ public class SessionManager {
         editor.apply();
 
     }
+
+    public void createSessionPai(String nome, String email, String cpf, String tell, String id ){
+        editor.putBoolean(LOGIN, true);
+        editor.putString(NAME, nome);
+        editor.putString(EMAIL, email);
+        editor.putString(CPF, cpf);
+        editor.putString(TELL, tell);
+        editor.putString(ID, id);
+        editor.apply();
+    }
+
+    public void createSessionKid(String nome, String dt_nas, String end_principal, String periodo, String idTios, String idEscola, String idPais, String id){
+        editor.putBoolean(LOGIN, true);
+        editor.putString(NAME, nome);
+        editor.putString(DATE, dt_nas);
+        editor.putString(ENDERECO, end_principal);
+        editor.putString(PERIODO, periodo);
+        editor.putString(IDT, idTios);
+        editor.putString(IDE, idEscola);
+        editor.putString(IDP, idPais);
+        editor.putString(ID, id);
+        editor.apply();
+    }
+
+
 
     public boolean isLoggin(){
         return sharedPreferences.getBoolean(LOGIN, false);
@@ -89,6 +121,31 @@ public class SessionManager {
         user.put(ID, sharedPreferences.getString(ID, null));
 
         return user;
+    }
+
+    public HashMap<String, String> getTiosDetail(){
+
+        HashMap<String, String> tios = new HashMap<>();
+        tios.put(NAME, sharedPreferences.getString(NAME, null));
+        tios.put(EMAIL, sharedPreferences.getString(EMAIL, null));
+        tios.put(CPF, sharedPreferences.getString(CPF, null));
+        tios.put(TELL, sharedPreferences.getString(TELL, null));
+        tios.put(ID, sharedPreferences.getString(ID, null));
+
+        return tios;
+    }
+
+    public HashMap<String, String> getKidDetail(){
+        HashMap<String, String> kid = new HashMap<>();
+        kid.put(NAME, sharedPreferences.getString(NAME, null));
+        kid.put(DATE, sharedPreferences.getString(DATE, null));
+        kid.put(ENDERECO, sharedPreferences.getString(ENDERECO, null));
+        kid.put(PERIODO, sharedPreferences.getString(PERIODO, null));
+        kid.put(IDT, sharedPreferences.getString(IDT, null));
+        kid.put(IDE, sharedPreferences.getString(IDE, null));
+        kid.put(IDP, sharedPreferences.getString(IDP, null));
+        kid.put(ID, sharedPreferences.getString(ID, null));
+        return kid;
     }
 
     public boolean logout(){
