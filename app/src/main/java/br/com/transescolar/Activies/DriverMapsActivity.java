@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -12,8 +13,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -86,6 +90,13 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
     private Switch mWorkingSwitch;
 
+    LocationCallback mLocationCallback;
+
+    public static final String SWITCH_PREFS = "Switch";
+    public static final String SWITCH_CHECKED = "isChecked";
+    public static final String SWITCH_NOT_CHECKED = "isNotChecked";
+    public static final String SWITCH_STATUS = "Status";
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,34 +109,44 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
         mapFragment.getMapAsync(this);
 
-
         //Criando o tollbar para custumizar
         getActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getActionBar().setTitle("Mapa");
 
+        //iniciando a sessão
         sessionManager = new SessionManager(this);
 
+        //pegando dados da sessão
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
         getCpf = user.get(sessionManager.CPF);
 
-        //myPermissionLocation();
-        //checkLocationPermission();
-        //myAlertDialog();
+        mWorkingSwitch = findViewById(R.id.workingSwitch);
 
-
-        mWorkingSwitch = (Switch) findViewById(R.id.workingSwitch);
+        final SharedPreferences sharedpreferences = getSharedPreferences("MY PREFS",   Context.MODE_PRIVATE);
+        mWorkingSwitch.setChecked(sharedpreferences.getBoolean(SWITCH_STATUS,false));
         mWorkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    connectDriver();
+                    myLocationCallback();
+                    checkLocationPermission();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean(SWITCH_STATUS, true);
+                    editor.commit();
+                    Log.d("Chamada if", "isChecked");
+
                 }else{
                     disconectarDriver();
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean(SWITCH_STATUS, false);
+                    editor.commit();
+                    Log.d("Chamada if", "isNotChecked");
                 }
             }
         });
+
 
     } //Oncreate
 
@@ -180,7 +201,7 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
     }
 
     private void myLocationCallback() {
-        mLocationCallback = new LocationCallback() {
+            mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
@@ -191,43 +212,20 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-                        HashMap<String, String> user = sessionManager.getUserDetail();
-                        getId = user.get(sessionManager.ID);
-                        getCpf = user.get(sessionManager.CPF);
-
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference refAvailable = database.getReference("driversAvailable");
                         DatabaseReference refWorking = database.getReference("driversWorking");
                         GeoFire geoFireAvailable = new GeoFire(refAvailable);
                         GeoFire geoFireWorking = new GeoFire(refWorking);
 
-                        switch (customerId) {
-                            case "":
-                                //geoFireWorking.removeLocation(getId);
-                                geoFireAvailable.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
-                                    @Override
-                                    public void onComplete(String key, DatabaseError error) {
-                                        if (error != null) {
-                                            Log.d("Sucesso", "onComplete: ");
-                                        }
-                                    }
-                                });
-                                Log.d("Case", "Vazio");
-                                break;
-
-                            default:
-                                //geoFireAvailable.removeLocation(getId);
-                                geoFireWorking.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
-                                    @Override
-                                    public void onComplete(String key, DatabaseError error) {
-                                        if (error != null) {
-                                            Log.d("Sucesso", "onComplete: ");
-                                        }
-                                    }
-                                });
-                                Log.d("Case", "Trabalhando");
-                                break;
-                        }
+                        geoFireAvailable.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                            @Override
+                            public void onComplete(String key, DatabaseError error) {
+                                if (error != null) {
+                                    Log.d("Sucesso", "Localização Salva ");
+                                }
+                            }
+                        });
 
                     }
 
@@ -262,43 +260,46 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
     }// onMapReady
 
-    LocationCallback mLocationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            for (Location location : locationResult.getLocations()) {
-                if (getApplicationContext() != null) {
-                    mLastLocation = location;
-
-                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom - 0.5f));
-
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference refAvailable = database.getReference("driversAvailable");
-                    DatabaseReference refWorking = database.getReference("driversWorking");
-                    GeoFire geoFireAvailable = new GeoFire(refAvailable);
-                    GeoFire geoFireWorking = new GeoFire(refWorking);
-
-
-                    geoFireAvailable.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
-                        @Override
-                        public void onComplete(String key, DatabaseError error) {
-                            if (error != null) {
-                                Log.d("Sucesso", "onComplete: ");
-                            }
-                        }
-                    });
-
-                    }
-
-            }
-            Log.d("Call", "onLocationResult");
-
-        }
-
-    };
-
+//    LocationCallback mLocationCallback = new LocationCallback() {
+//        @Override
+//        public void onLocationResult(LocationResult locationResult) {
+//
+//            for (Location location : locationResult.getLocations()) {
+//            if (getApplicationContext() != null) {
+//                mLastLocation = location;
+//
+//                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+//
+//                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//                //mMap.animateCamera(CameraUpdateFactory.zoomTo(+11));
+//
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                DatabaseReference refAvailable = database.getReference("driversAvailable");
+//                DatabaseReference refWorking = database.getReference("driversWorking");
+//                GeoFire geoFireAvailable = new GeoFire(refAvailable);
+//                GeoFire geoFireWorking = new GeoFire(refWorking);
+//
+//                geoFireAvailable.setLocation(getId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+//                    @Override
+//                    public void onComplete(String key, DatabaseError error) {
+//                        if (error != null) {
+//                            Log.d("Sucesso", "Localização Salva ");
+//                        }
+//                    }
+//                });
+//
+//
+//
+//
+//                }
+//
+//        }
+//
+//        Log.d("Chamada", "onLocationResult");
+//
+//        }
+//
+//    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -338,8 +339,7 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
         mLocationRequest.setInterval(50000);
         mLocationRequest.setFastestInterval(10000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        //myLocationCallback();
-        Log.d("Call", "requestLocationUpdates");
+        Log.d("Chamada", "requestLocationUpdates");
     }
 
     protected void stopLocationUpdates() {
@@ -353,20 +353,23 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
         checkLocationPermission();
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         mMap.setMyLocationEnabled(true);
-        Log.d("Call", "connectDriver");
+        Log.d("Chamada", "connectDriver");
     }
 
     private void disconectarDriver() {
-        if (mFusedLocationClient != null){
+
+        if(mFusedLocationClient != null){
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
 
         GeoFire geoFire = new GeoFire(ref);
         geoFire.removeLocation(getId, new GeoFire.CompletionListener() {
             @Override
             public void onComplete(String key, DatabaseError error) {
-                Log.d("Call", "disconectarDriver");
+                mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+                Log.d("Chamada", "disconectarDriver");
             }
         });
     }
@@ -374,22 +377,59 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("Chamada", "onStart fired ..............");
+        if (mWorkingSwitch.isChecked()){
+            myLocationCallback();
+            checkLocationPermission();
+            Log.d("Chamada mWorkingSwitch", "onCreate isChecked");
+        }else {
+            Toast.makeText(this, "Voce está offline!", Toast.LENGTH_SHORT).show();
+            Log.d("Chamada mWorkingSwitch", "onCreate isNotChecked");
+
+        }
+
+        Log.d("Chamada", "onStart..............");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mFusedLocationClient != null) {
-            requestLocationUpdates();
-        }
-        Log.d("Chamada", "Location update resumed .....................");
+
+
+        Log.d("Chamada", "onResume.....................");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        requestLocationUpdates();
+
+        if (mWorkingSwitch.isChecked()){
+            myLocationCallback();
+            checkLocationPermission();
+            Log.d("Chamada mWorkingSwitch", "onCreate isChecked");
+        }else {
+            Toast.makeText(this, "Voce está offline!", Toast.LENGTH_SHORT).show();
+            Log.d("Chamada mWorkingSwitch", "onCreate isNotChecked");
+        }
+
+        Log.d("Chamada", "onPause.....................");
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mWorkingSwitch.isChecked()){
+            myLocationCallback();
+            checkLocationPermission();
+            Log.d("Chamada mWorkingSwitch", "onCreate isChecked");
+        }else {
+            Log.d("Chamada mWorkingSwitch", "onCreate isNotChecked");
+
+        }
+
+        Log.d("Chamada", "onStop.....................");
+
     }
 
     @Override
@@ -401,5 +441,6 @@ public class DriverMapsActivity extends FragmentActivity implements OnMapReadyCa
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }// Map Activity

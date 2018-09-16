@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:text="Trabalhando"
                 android:textColor="#000"
+                android:checked="false"
                 android:layout_margin="10sp"
                 android:id="@+id/workingSwitch"/>
 
